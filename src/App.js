@@ -5,7 +5,6 @@ import Footer from "./Footer.js"
 
 export default function App(){
 
-    // create our state and setstate that holds the current kanji
     const [currentKanji, setCurrentKanji] = useState(
         JSON.parse(localStorage.getItem("kanjiobj")) || {}
     )
@@ -14,7 +13,7 @@ export default function App(){
     useEffect(() => { 
         if(Object.keys(currentKanji).length === 0){
         const fetchData = async () => {
-            const response = await fetch('https://kanjiapi.dev/v1/kanji/裁')
+            const response = await fetch('https://kanjiapi.dev/v1/kanji/高')
             const newData = await response.json()
             localStorage.setItem("kanjiobj", JSON.stringify(newData))
             setCurrentKanji(newData)

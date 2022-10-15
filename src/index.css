@@ -19,7 +19,6 @@ code {
 }
 
 
-
 /* :Kanji.js */
 #kanjiStripe{
   background-color: #66669b;
@@ -91,7 +90,7 @@ code {
   font-size: 1vw;
 }
 #icons{
-  opacity: .3;
+  opacity: .2;
   margin: 1% .5%;
   margin-bottom: 0;
   align-self: flex-end;
@@ -99,8 +98,8 @@ code {
   min-width: 10vw;
   text-align: end;
 }
-#settingsIcon{
+.icon{
+  width: 1.5vw;
   margin-right: .5vw;
 }
-
 
