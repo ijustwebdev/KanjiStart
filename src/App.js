@@ -4,16 +4,18 @@ import Meanings from "./Meanings.js"
 import Footer from "./Footer.js"
 
 export default function App(){
-
+    // TODO: need to have settings stored locally that controls colors, grade of kanji allowed to be grabbed, and anything else
+    // TODO: I can think of. 
     const [currentKanji, setCurrentKanji] = useState(
-        JSON.parse(localStorage.getItem("kanjiobj")) || {}
+        JSON.parse(localStorage.getItem("kanjiobj")) || null
     )
+    const [showingMeanings, setShowingMeanings] = useState(false)
     // fetch a kanji, will be randomized later unless I can think of 
     // an easy search method. maybe random but by grade or other category
     useEffect(() => { 
-        if(Object.keys(currentKanji).length === 0){
+        if(currentKanji == null){
         const fetchData = async () => {
-            const response = await fetch('https://kanjiapi.dev/v1/kanji/高')
+            const response = await fetch('https://kanjiapi.dev/v1/kanji/順')
             const newData = await response.json()
             localStorage.setItem("kanjiobj", JSON.stringify(newData))
             setCurrentKanji(newData)
@@ -21,17 +23,18 @@ export default function App(){
             fetchData()
             console.warn("currentKanji Set")
         }
-        else{
-            console.warn("currentKanji Full")
-            console.log(currentKanji)
-        }
-    },[currentKanji])
+    },[currentKanji, showingMeanings])
+
+    function flipMeanings(){
+        setShowingMeanings(prevMeaning => !prevMeaning)
+    }
+
 
     return(
         <div id="flexWrapper">
-            <Kanji character={currentKanji}/> 
-            <Meanings character={currentKanji}/> 
-            <Footer character={currentKanji}/> 
+            {currentKanji !== null ? <Kanji character={currentKanji}/> : null} 
+            {currentKanji !== null ? <Meanings character={currentKanji} meanings={showingMeanings} onClick={flipMeanings}/> : null}
+            {currentKanji !== null ? <Footer character={currentKanji}/> : null} 
         </div>
     )
 }

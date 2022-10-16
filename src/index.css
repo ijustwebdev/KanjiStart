@@ -17,7 +17,9 @@ code {
   min-height: 100vh;
   justify-content: space-between;
 }
-
+.loadingMainSplash{
+  margin: 0 auto;
+}
 
 /* :Kanji.js */
 #kanjiStripe{
@@ -48,25 +50,60 @@ code {
   margin-left: 42vw;
   margin-top: 21vw;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   width: 50vw;
   font-size: 2.5vw; 
-  
 }
 .meaningChildDiv{
   display: flex;
   flex-direction: column;
   max-width: 60vw;
 }
-.meaningEl{
-  margin-top: .5rem;
+.entryEl{
   
+}
+.meaningElLabel{
+  font-size: 1vw;
+
+}
+.meaningElInfo{
+  font-size: 2.5vw;
+}
+.meaningDividers{
+  font-size: 1vw;
+  margin: auto -.2vw;
 }
 .loading{
   margin-top: .5rem;
 }
-
-
+.subMeaning{
+  font-size: 1vw;
+  list-style-type: circle;
+  line-height: 1.3;
+  padding-left: .2vw;
+}
+#conditionalMeanings{
+  display: flex;
+  width: auto;
+  line-height: 1;
+  height: 2vw;
+  cursor: pointer;
+  border-radius: .1vw;
+  box-shadow: rgba(102, 102, 155, 1) 0px 0px 1px 0px;
+  -webkit-user-select: none; /* Safari */        
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
+}
+.moreMeanings{
+  font-size: 1vw;
+  max-height: 100%;
+  margin: auto 0;
+  margin-left: .2vw;
+}
+#extraMeanings{
+  margin-top: 1vw;
+}
 
 /* :Footer.js */
 #searchLinkText{
@@ -79,14 +116,14 @@ code {
   flex-wrap: nowrap;
 }
 #centerFooter{
-  height: 10vw;
+  height: 1vw;
 }
 #centerFooter > a{
   text-decoration: none;
   color: #66669b;
 }
+/* this rule is also used in Meanings.js */
 .material-symbols-outlined{
-  line-height: 12.5;
   font-size: 1vw;
 }
 #icons{
