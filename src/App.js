@@ -15,7 +15,7 @@ export default function App(){
     useEffect(() => { 
         if(currentKanji == null){
         const fetchData = async () => {
-            const response = await fetch('https://kanjiapi.dev/v1/kanji/順')
+            const response = await fetch('https://kanjiapi.dev/v1/kanji/近')
             const newData = await response.json()
             localStorage.setItem("kanjiobj", JSON.stringify(newData))
             setCurrentKanji(newData)

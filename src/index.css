@@ -42,19 +42,27 @@ code {
 #meaningDiv{
   display: flex;
   align-items: center;
+  height: 100vh;
   width: 50vw;
   font-size: 2.5vw; 
-  margin-left: auto;
+  margin: 0 auto;
 }
 .meaningChildDiv{
   display: flex;
   flex-direction: column;
-  max-width: 60vw;
   margin-left: 5vw;
+  margin-top: 20vh;
+  height: 50vh;
 }
 .entryEl{
   display: flex;
   align-items: baseline;
+}
+#kunyomiLabel, #onyomiLabel{
+  position: fixed;
+  font-size: .7vw;
+  font-style: italic;
+  transform: translateY(1.7vh);
 }
 .meaningElLabel, .meaningDividers{
   font-size: 1vw;
@@ -71,33 +79,49 @@ code {
 }
 .subMeaning{
   font-size: 1vw;
-  list-style-type: circle;
+  list-style-type: square;
   line-height: 1.3;
   padding-left: .2vw;
 }
-#conditionalMeanings, #jishoSearch{
+/* :BUTTONS */
+.buttons{
+  transition: 0.25s;
+}
+.buttons:hover{
+    box-shadow: inset rgba(102, 102, 155, 1) 0px 0px 0px 100vw;
+}
+.buttons:active{
+  transition: .1s;
+  box-shadow: inset rgba(255, 255, 255, .5) 0px 0px 0px 100vw;
+}
+.buttons:hover #link, .buttons:hover #searchLinkText, .buttons:hover #moreMeanings, .buttons:hover #darkIcon{
+  color: #1e2935;
+}
+#conditionalMeanings, #jishoSearch>a{
   margin-top: .5vw;
   display: flex;
-  width: auto;
-  line-height: 1;
   height: 2vw;
+  width: 15vw;
   cursor: pointer;
   border-radius: .1vw;
-  background-color: #66669b;
-  color: #1e2935;
+  background-color: transparent;
+  color: #66669b;
+  border: solid 3px #66669b;
   /* box-shadow: rgba(102, 102, 155, 1) 0px 0px 3px 0px; */
   -webkit-user-select: none; /* Safari */        
   -moz-user-select: none; /* Firefox */
   -ms-user-select: none; /* IE10+/Edge */
   user-select: none; /* Standard */
 }
-.moreMeanings{
+#jishoSearch{
+  height: 2vw;
+}
+.moreMeanings, #link{
   font-size: 1.5vw;
   max-height: 100%;
-  margin: auto 0;
-  margin-left: .2vw;
+  margin: auto .5vw;
 }
-#moreMeanings{
+#moreMeanings, #searchLinkText{
   font-size: 1vw;
   margin: auto 0;
 }
@@ -107,10 +131,6 @@ code {
 #jishoSearch>a{
   text-decoration: none;
   font-size: 1vw;
-  color: #1e2935;
-}
-#link{
-  font-size: 1.5vw;
 }
 /* :SidebarLinks.js */
 #sidebar{
@@ -124,4 +144,6 @@ code {
 .icon{
   width: 1vw;
 }
-
+.icon:hover{
+  opacity: 1;
+}
