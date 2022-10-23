@@ -147,3 +147,13 @@ code {
 .icon:hover{
   opacity: 1;
 }
+@media(min-width: 1921px){
+  #flexWrapper{
+    max-width: 1920px;
+    margin: 0 auto;
+    justify-content: center;
+  }
+  #sidebar{
+    justify-content: space-evenly;
+  }
+}
