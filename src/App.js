@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react"
 import Kanji from "./Kanji.js"
 import Meanings from "./Meanings.js"
-import Footer from "./Footer.js"
+import SidebarLinks from "./SidebarLinks.js"
 
 export default function App(){
     // TODO: need to have settings stored locally that controls colors, grade of kanji allowed to be grabbed, and anything else
@@ -34,7 +34,7 @@ export default function App(){
         <div id="flexWrapper">
             {currentKanji !== null ? <Kanji character={currentKanji}/> : null} 
             {currentKanji !== null ? <Meanings character={currentKanji} meanings={showingMeanings} onClick={flipMeanings}/> : null}
-            {currentKanji !== null ? <Footer character={currentKanji}/> : null} 
+            {currentKanji !== null ? <SidebarLinks character={currentKanji}/> : null}
         </div>
     )
 }

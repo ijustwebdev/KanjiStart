@@ -2,9 +2,8 @@ import React from "react"
 
 export default function Kanji(props){
     return(
-        <>
-            <span id="kanjiStripe"></span>
+        <div id="coloredBgAndKanji">
             <span id="kanjiCharacter">{props.character.kanji}</span>
-        </>
+        </div>
     )
 }
