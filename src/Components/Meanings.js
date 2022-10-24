@@ -25,6 +25,7 @@ export default function Meanings(props){
             <li className="subMeaning" key={meaning}>{meaning}</li>
         )
     })
+
     return(
         <div id="meaningDiv">
             {/* left column */}

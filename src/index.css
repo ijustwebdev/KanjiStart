@@ -160,23 +160,58 @@ code {
   cursor: default;
 }
 /* :SettingsModal.js */
-#settingsModal{
+#modalBackground{
   position: fixed;
   color: #1e2935;
-  background-color: rgba(33, 33, 33, .4);
+  background-color: rgba(33, 33, 33, .8);
   height: 100vh;
   width: 100vw;
-  transition: all 2s ease-in-out;
 }
-#settingsModalWindow{
+#modalWindow{
   background-color: #66669b;
+  color: white;
   border-style: double;
-  height: 25vh;
-  width: 10vw;
+  border-radius: .5vw;
+  width: 11vw;
   position: fixed;
   right: 1vw;
   top: 1vw;
   padding: 1vw;
+}
+#settingsForm{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+#settingsForm label{
+  margin-left: 1vw;
+}
+#topGradeEl{
+  margin-top: 0;
+}
+#topSettingsEl{
+  margin-top: 0;
+}
+.settingsGradeEl{
+  margin-top: 1vw;
+}
+.settingsHourEl{
+  margin-top: .2vw;
+}
+.settingsHourEl>label{
+  margin-left: .5vw;
+}
+legend{
+  text-align: center;
+}
+fieldset{
+  border-radius: .2vw;
+  border-color: white;
+  border-width: 2px;
+}
+#secondFieldset{
+  margin-top: 1vw;
 }
 @media(min-width: 1921px){
   #flexWrapper{

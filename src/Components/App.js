@@ -3,6 +3,7 @@ import Kanji from "./Kanji.js"
 import Meanings from "./Meanings.js"
 import SidebarLinks from "./SidebarLinks.js"
 import SettingsModal from "./SettingsModal.js"
+import anime from "animejs/lib/anime.es.js"
 
 export default function App(){
     // TODO need to have settings stored locally that controls colors, grade of kanji allowed to be grabbed, and 
@@ -12,26 +13,49 @@ export default function App(){
     )
     const [showingMeanings, setShowingMeanings] = useState(false)
     const [showingModal, setShowingModal] = useState(false)
+    const [settingsData, setSettingsData] = useState({
+        grade1: true,
+        grade2: true,
+        grade3: true,
+        grade4: true,
+        grade5: true,
+        grade6: true,
+        hourInterval: 6
+    })
     // fetch a kanji, will be randomized later unless I can think of 
     // an easy search method. maybe random but by grade or other category
     useEffect(() => { 
         if(currentKanji == null){
         const fetchData = async () => {
-            const response = await fetch('https://kanjiapi.dev/v1/kanji/近')
+            const response = await fetch('https://kanjiapi.dev/v1/kanji/蛍')
             const newData = await response.json()
             // sets our localstorage and currentKanji object to be the data we just got back from the fetch request
             localStorage.setItem("kanjiobj", JSON.stringify(newData))
             setCurrentKanji(newData)
             }
             fetchData()
-            //! REMOVE THIS BEFORE WRAPPING UP
-            console.warn("currentKanji Set")
         }
     },[currentKanji, showingMeanings])
+
+    function handleChange(event){
+        const {name, checked, type, value} = event.target
+        setSettingsData(prevSettings => {
+            return{
+                ...prevSettings,
+                [name]: type === "checkbox" ? checked : parseInt(value)
+            }
+        })
+    }
 
     // just a function to flip a bool to show/hide our extra information
     function flipMeanings(){
         setShowingMeanings(prevMeaning => !prevMeaning)
+        // ! CURRENTLY DOES NOT WORK BUT ANIMEJS IS STILL INSTALLED
+        anime({
+            target: '#extraMeanings',
+            duration: 100,
+            translateY: 100
+        })
     }
 
     // another simple function, could have made this more universal somehow but I need to set state for many objects. 
@@ -55,7 +79,7 @@ export default function App(){
             {currentKanji !== null ? <Kanji character={currentKanji}/> : null} 
             {currentKanji !== null ? <Meanings character={currentKanji} meanings={showingMeanings} onClick={flipMeanings}/> : null}
             {currentKanji !== null ? <SidebarLinks character={currentKanji} onClick={flipModal}/> : null}
-            {currentKanji !== null ? <SettingsModal showingModal={showingModal} onClick={flipModal}/> : null}
+            {currentKanji !== null ? <SettingsModal showingModal={showingModal} onClick={flipModal} handleChange={handleChange} settingsData={settingsData}/> : null}
         </div>
     )
 }
