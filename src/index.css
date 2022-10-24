@@ -1,0 +1,190 @@
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: #1e2935;
+  color: #66669b;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+#flexWrapper{
+  display: flex;
+  flex-direction: row;
+  width: 100vw;
+  height: 100vh;
+}
+.loadingMainSplash{
+  margin: 0 auto;
+}
+
+/* :Kanji.js */
+#coloredBgAndKanji{
+  background-color: #66669b;
+  height: 100vh;
+  width: 30vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#kanjiCharacter{
+  font-size: 22vw;
+  color: #1e2935;
+  /* idk what to do about this text shadow */
+  /* text-shadow: 0px 2px 3px rgba(255, 255, 255, 0.2);
+  -webkit-background-clip: text;
+     -moz-background-clip: text;
+          background-clip: text; */
+}
+/* :Meanings.js */
+#meaningDiv{
+  display: flex;
+  align-items: center;
+  height: 100vh;
+  width: 50vw;
+  font-size: 2.5vw; 
+  margin: 0 auto;
+}
+.meaningChildDiv{
+  display: flex;
+  flex-direction: column;
+  margin-left: 5vw;
+  margin-top: 20vh;
+  height: 50vh;
+}
+.entryEl{
+  display: flex;
+  align-items: baseline;
+}
+#kunyomiLabel, #onyomiLabel{
+  position: fixed;
+  font-size: .7vw;
+  font-style: italic;
+  transform: translateY(1.7vh);
+}
+.meaningElLabel, .meaningDividers{
+  font-size: 1vw;
+  font-style: italic;
+}
+.meaningDividers{
+  margin: 0 .4vw;
+}
+.meaningElInfo{
+  font-size: 2.5vw;
+}
+.loading{
+  margin-top: .5rem;
+}
+.subMeaning{
+  font-size: 1vw;
+  list-style-type: square;
+  line-height: 1.3;
+  padding-left: .2vw;
+}
+/* :BUTTONS inside Meanings.js */
+.buttons{
+  transition: 0.25s;
+}
+.buttons:hover{
+  box-shadow: inset rgba(102, 102, 155, 1) 0px 0px 0px 100vw;
+}
+.buttons:active{
+  transition: .1s;
+  box-shadow: inset rgba(255, 255, 255, .5) 0px 0px 0px 100vw;
+}
+.buttons:hover #link, .buttons:hover #searchLinkText, .buttons:hover #moreMeanings, .buttons:hover #darkIcon{
+  color: #1e2935;
+}
+#conditionalMeanings, #jishoSearch>a{
+  margin-top: .5vw;
+  display: flex;
+  height: 2vw;
+  width: 15vw;
+  border-radius: .1vw;
+  background-color: transparent;
+  color: #66669b;
+  border: solid 3px #66669b;
+  /* box-shadow: rgba(102, 102, 155, 1) 0px 0px 3px 0px; */
+  -webkit-user-select: none; /* Safari */        
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
+}
+#jishoSearch>a{
+  cursor: pointer;
+}
+#jishoSearch{
+  height: 2vw;
+}
+.moreMeanings, #link{
+  font-size: 1.5vw;
+  max-height: 100%;
+  margin: auto .5vw;
+}
+#moreMeanings, #searchLinkText{
+  font-size: 1vw;
+  margin: auto 0;
+}
+#extraMeanings{
+  margin-top: 1vw;
+}
+#jishoSearch>a{
+  text-decoration: none;
+  font-size: 1vw;
+}
+/* :SidebarLinks.js */
+#sidebar{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 1vw 1vw;
+  margin-left: auto;
+}
+.icon img{
+  width: 1.2vw;
+  opacity: .1;
+  transition: .35s;
+}
+.icon:hover img{
+  opacity: .9;
+  cursor: pointer;
+}
+#settingsButton{
+  border: none;
+  background-color: transparent;
+}
+/* !little dirty fix, should have set cursor: pointer on the github link */
+#settingsButton>img{
+  cursor: default;
+}
+/* :SettingsModal.js */
+#settingsModal{
+  position: fixed;
+  color: #1e2935;
+  background-color: rgba(33, 33, 33, .4);
+  height: 100vh;
+  width: 100vw;
+  transition: all 2s ease-in-out;
+}
+#settingsModalWindow{
+  background-color: #66669b;
+  border-style: double;
+  height: 25vh;
+  width: 10vw;
+  position: fixed;
+  right: 1vw;
+  top: 1vw;
+  padding: 1vw;
+}
+@media(min-width: 1921px){
+  #flexWrapper{
+    max-width: 1920px;
+    margin: 0 auto;
+    justify-content: center;
+  }
+  #sidebar{
+    justify-content: space-evenly;
+  }
+}

@@ -1,1 +1,1 @@
-
+So basically I wanted to make something similar to kanjiday 
