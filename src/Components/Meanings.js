@@ -80,7 +80,7 @@ export default function Meanings(props){
                     <a href={url} className="buttons">
                     {/* <span className="material-symbols-outlined search" id="searchIcon">search</span> */}
                     <span className="material-symbols-outlined" id="link">link</span>
-                    <span id="searchLinkText">SEARCH JISHO.ORG</span>
+                    <span id="searchLinkText">MORE AT JISHO.ORG</span>
                     </a>
                 </div>
 

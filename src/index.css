@@ -83,12 +83,12 @@ code {
   line-height: 1.3;
   padding-left: .2vw;
 }
-/* :BUTTONS */
+/* :BUTTONS inside Meanings.js */
 .buttons{
   transition: 0.25s;
 }
 .buttons:hover{
-    box-shadow: inset rgba(102, 102, 155, 1) 0px 0px 0px 100vw;
+  box-shadow: inset rgba(102, 102, 155, 1) 0px 0px 0px 100vw;
 }
 .buttons:active{
   transition: .1s;
@@ -102,7 +102,6 @@ code {
   display: flex;
   height: 2vw;
   width: 15vw;
-  cursor: pointer;
   border-radius: .1vw;
   background-color: transparent;
   color: #66669b;
@@ -112,6 +111,9 @@ code {
   -moz-user-select: none; /* Firefox */
   -ms-user-select: none; /* IE10+/Edge */
   user-select: none; /* Standard */
+}
+#jishoSearch>a{
+  cursor: pointer;
 }
 #jishoSearch{
   height: 2vw;
@@ -134,18 +136,47 @@ code {
 }
 /* :SidebarLinks.js */
 #sidebar{
-  opacity: .2;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   margin: 1vw 1vw;
   margin-left: auto;
 }
-.icon{
-  width: 1vw;
+.icon img{
+  width: 1.2vw;
+  opacity: .1;
+  transition: .35s;
 }
-.icon:hover{
-  opacity: 1;
+.icon:hover img{
+  opacity: .9;
+  cursor: pointer;
+}
+#settingsButton{
+  border: none;
+  background-color: transparent;
+}
+/* !little dirty fix, should have set cursor: pointer on the github link */
+#settingsButton>img{
+  cursor: default;
+}
+/* :SettingsModal.js */
+#settingsModal{
+  position: fixed;
+  color: #1e2935;
+  background-color: rgba(33, 33, 33, .4);
+  height: 100vh;
+  width: 100vw;
+  transition: all 2s ease-in-out;
+}
+#settingsModalWindow{
+  background-color: #66669b;
+  border-style: double;
+  height: 25vh;
+  width: 10vw;
+  position: fixed;
+  right: 1vw;
+  top: 1vw;
+  padding: 1vw;
 }
 @media(min-width: 1921px){
   #flexWrapper{
