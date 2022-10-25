@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef} from "react"
+import React, {useEffect, useState} from "react"
 import Kanji from "./Kanji.js"
 import Meanings from "./Meanings.js"
 import SidebarLinks from "./SidebarLinks.js"
@@ -6,7 +6,6 @@ import SettingsModal from "./SettingsModal.js"
 import anime from "animejs/lib/anime.es.js"
 
 export default function App(){
-    // TODO need to have settings stored locally that controls colors, grade of kanji allowed to be grabbed, and 
     // TODO hour interval to grab a new kanji at
     const [currentKanji, setCurrentKanji] = useState(
         JSON.parse(localStorage.getItem("kanjiobj")) || null
@@ -14,41 +13,65 @@ export default function App(){
     const [showingMeanings, setShowingMeanings] = useState(false)
     const [showingModal, setShowingModal] = useState(false)
     const [settingsData, setSettingsData] = useState(
-        JSON.parse(localStorage.getItem("settingsData") || null)
+        JSON.parse(localStorage.getItem("settingsData")) || null
     )
 
-    // fetch a kanji, will be randomized later unless I can think of 
-    // an easy search method. maybe random but by grade or other category
+    // currently checks to see if we have some state in currentKanji and settingsData and if not populates with some default data.
+    if(currentKanji == null){
+        const fetchData = async () => {
+            const response = await fetch('https://kanjiapi.dev/v1/kanji/蛍')
+            const newData = await response.json()
+            // sets our localstorage and currentKanji object to be the data we just got back from the fetch request
+            localStorage.setItem("kanjiobj", JSON.stringify(newData))
+            setCurrentKanji(newData)
+            }
+        fetchData()
+    }
+    // check if we have settings, if not generate them and store them in localStorage then set our settingsData default state.
+    if(settingsData == null){
+        const data = {
+            grade1: true,
+            grade2: true,
+            grade3: true,
+            grade4: true,
+            grade5: true,
+            grade6: true,
+            hourInterval: 12
+        }
+        setSettingsData(data)
+        localStorage.setItem("settingsData", JSON.stringify(data))
+    }
+
 
     // ? I guess I don't understand useEffect or what it's supposed to be used for. 
-    useEffect(() => { 
-        if(currentKanji == null){
-            const fetchData = async () => {
-                const response = await fetch('https://kanjiapi.dev/v1/kanji/蛍')
-                const newData = await response.json()
-                // sets our localstorage and currentKanji object to be the data we just got back from the fetch request
-                localStorage.setItem("kanjiobj", JSON.stringify(newData))
-                setCurrentKanji(newData)
-                }
-                fetchData()
-            }
-            // check if we have settings, if not generate them and store them in localStorage then set our settingsData default state.
-            if(settingsData == null){
-                const data = {
-                    grade1: true,
-                    grade2: true,
-                    grade3: true,
-                    grade4: true,
-                    grade5: true,
-                    grade6: true,
-                    hourInterval: 12
-                }
-                setSettingsData(data)
-                localStorage.setItem("settingsData", JSON.stringify(data))
-            }
+    // useEffect((settingsData) => { 
+    //     if(currentKanji == null){
+    //         const fetchData = async () => {
+    //             const response = await fetch('https://kanjiapi.dev/v1/kanji/蛍')
+    //             const newData = await response.json()
+    //             // sets our localstorage and currentKanji object to be the data we just got back from the fetch request
+    //             localStorage.setItem("kanjiobj", JSON.stringify(newData))
+    //             setCurrentKanji(newData)
+    //             }
+    //             fetchData()
+    //         }
+    //         // check if we have settings, if not generate them and store them in localStorage then set our settingsData default state.
+    //         if(settingsData == null){
+    //             const data = {
+    //                 grade1: true,
+    //                 grade2: true,
+    //                 grade3: true,
+    //                 grade4: true,
+    //                 grade5: true,
+    //                 grade6: true,
+    //                 hourInterval: 12
+    //             }
+    //             setSettingsData(data)
+    //             localStorage.setItem("settingsData", JSON.stringify(data))
+    //         }
+    // },[currentKanji])
 
-    },[currentKanji, settingsData])
-
+    // function to handle our settings form items being checked or selected.
     function handleChange(event){
         const {name, checked, type, value} = event.target
         setSettingsData(prevSettingsData => {
@@ -59,6 +82,7 @@ export default function App(){
         })
     }
 
+    // this function just sets the localstorage to what the user has selected in the settings menu
     function handleSubmit(event){
         event.preventDefault()
         localStorage.setItem("settingsData", JSON.stringify(settingsData))
@@ -80,10 +104,17 @@ export default function App(){
     // check if the interval between now and last kanji fetch has elapsed
     // check grades selected
     // pick grade randomly from selected
-    // TODO find out .length() of each grade object and hardcode them for our random number gen here since a request every time to get the length sux
     // get a random number that maxes out at the .length of that grade object
     // fetch request to kanjiapi for the kanji we just grabbed with our random number
     // .setItem("kanjiobj") with our new kanji data
+
+    //? hardcoded kanji grade object lengths
+    // grade1: 80
+    // grade2: 160
+    // grade3: 200
+    // grade4: 200
+    // grade5: 185
+    // grade6: 181
 
     return(
         <div id="flexWrapper">
