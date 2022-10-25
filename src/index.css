@@ -185,7 +185,8 @@ code {
   align-items: flex-start;
 }
 #settingsForm label{
-  margin-left: 1vw;
+  margin-left: .1vw;
+  user-select: none;
 }
 #topGradeEl{
   margin-top: 0;
@@ -200,10 +201,11 @@ code {
   margin-top: .2vw;
 }
 .settingsHourEl>label{
-  margin-left: .5vw;
+  margin-left: .2vw;
 }
 legend{
   text-align: center;
+  user-select: none;
 }
 fieldset{
   border-radius: .2vw;

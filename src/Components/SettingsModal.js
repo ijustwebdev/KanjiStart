@@ -8,7 +8,7 @@ export default function SettingsModal(props){
         <>
             <div id="modalBackground" onClick={props.onClick}></div>
             <div id="modalWindow">
-                <form onSubmit={props.handleChange}>
+                <form onSubmit={props.handleSubmit}>
                     <fieldset id="settingsForm">
                         <legend>Kanji Grades Used</legend>
                             <div className="settingsGradeEl" id="topGradeEl">
@@ -108,6 +108,7 @@ export default function SettingsModal(props){
                             <label htmlFor="24hr">24 Hours</label>
                         </div>
                     </fieldset>
+                    <button>Save Settings</button>
                 </form>
             </div>
         </>
