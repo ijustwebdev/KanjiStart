@@ -163,7 +163,8 @@ code {
 #modalBackground{
   position: fixed;
   color: #1e2935;
-  background-color: rgba(33, 33, 33, .8);
+  background-color: #222;
+  opacity: 0;
   height: 100vh;
   width: 100vw;
 }

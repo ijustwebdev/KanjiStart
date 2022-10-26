@@ -1,4 +1,5 @@
 import React from "react"
+import { motion } from "framer-motion"
 
 export default function Meanings(props){
 
@@ -22,7 +23,7 @@ export default function Meanings(props){
     //! .slice seems to directly modify meaningElements which I do not think we want
     const meaningElements = englishReading.slice(1).map((meaning) => {
         return(
-            <li className="subMeaning" key={meaning}>{meaning}</li>
+            <motion.li className="subMeaning" initial={{ opacity: 0, y: "-20%"}} transition={{ duration: 0.2 }} animate={{y: "0%", opacity: "100%"}} key={meaning}>{meaning}</motion.li>
         )
     })
 

@@ -1,11 +1,13 @@
-import React, {useEffect, useState} from "react"
+import React, { useState} from "react"
 import Kanji from "./Kanji.js"
 import Meanings from "./Meanings.js"
 import SidebarLinks from "./SidebarLinks.js"
 import SettingsModal from "./SettingsModal.js"
-import anime from "animejs/lib/anime.es.js"
+
+
 
 export default function App(){
+    
     // TODO hour interval to grab a new kanji at
     const [currentKanji, setCurrentKanji] = useState(
         JSON.parse(localStorage.getItem("kanjiobj")) || null
@@ -19,7 +21,7 @@ export default function App(){
     // currently checks to see if we have some state in currentKanji and settingsData and if not populates with some default data.
     if(currentKanji == null){
         const fetchData = async () => {
-            const response = await fetch('https://kanjiapi.dev/v1/kanji/蛍')
+            const response = await fetch('https://kanjiapi.dev/v1/kanji/無')
             const newData = await response.json()
             // sets our localstorage and currentKanji object to be the data we just got back from the fetch request
             localStorage.setItem("kanjiobj", JSON.stringify(newData))
@@ -36,12 +38,17 @@ export default function App(){
             grade4: true,
             grade5: true,
             grade6: true,
-            hourInterval: 12
+            hourInterval: 12,
+            grade1length: 80,
+            grade2length: 160,
+            grade3length: 200,
+            grade4length: 200,
+            grade5length: 185,
+            grade6length: 181
         }
         setSettingsData(data)
         localStorage.setItem("settingsData", JSON.stringify(data))
     }
-
 
     // ? I guess I don't understand useEffect or what it's supposed to be used for. 
     // useEffect((settingsData) => { 
@@ -97,6 +104,7 @@ export default function App(){
     // need some way to import which useState set function is being called if possible
     function flipModal(){
         setShowingModal(prevModalState => !prevModalState)
+        
     }
 
 
@@ -108,14 +116,7 @@ export default function App(){
     // fetch request to kanjiapi for the kanji we just grabbed with our random number
     // .setItem("kanjiobj") with our new kanji data
 
-    //? hardcoded kanji grade object lengths
-    // grade1: 80
-    // grade2: 160
-    // grade3: 200
-    // grade4: 200
-    // grade5: 185
-    // grade6: 181
-
+    
     return(
         <div id="flexWrapper">
             {currentKanji !== null ? <Kanji character={currentKanji}/> : null} 

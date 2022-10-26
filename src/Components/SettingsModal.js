@@ -1,13 +1,13 @@
 import React from "react"
+import { motion } from "framer-motion"
 
 export default function SettingsModal(props){
-
     return(
         <>
         {props.showingModal ? 
         <>
-            <div id="modalBackground" onClick={props.onClick}></div>
-            <div id="modalWindow">
+            <motion.div id="modalBackground" onClick={props.onClick} initial={{opacity: 0}} transition={{duration: .2}} animate={{opacity: 0.7}}></motion.div>
+            <motion.div id="modalWindow" initial={{y: "-40vw"}} transition={{duration: .2}} animate={{y: "1vw"}} >
                 <form onSubmit={props.handleSubmit}>
                     <fieldset id="settingsForm">
                         <legend>Kanji Grades Used</legend>
@@ -110,7 +110,7 @@ export default function SettingsModal(props){
                     </fieldset>
                     <button>Save Settings</button>
                 </form>
-            </div>
+            </motion.div>
         </>
         : null}
         </>

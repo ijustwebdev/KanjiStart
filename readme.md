@@ -1,1 +1,1 @@
-So basically I wanted to make something similar to kanjiday 
+So basically I wanted to make something similar to kanjiday and I wanted to use react to do it. I think I got kind of close. Would have been nice to have a design to go off of. Not only would the end product look better but it would have saved me a bunch of time with the CSS.
