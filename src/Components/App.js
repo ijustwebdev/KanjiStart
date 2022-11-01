@@ -21,9 +21,8 @@ export default function App(){
         // fetching inside useEffect would have been more desireable I think.
     // currently checks to see if we have some state in currentKanji and settingsData and if not populates with some default data.
     if(currentKanji == null){
-        const allowedGrades = settingsData.grade1
         const fetchData = async () => {
-            const response = await fetch('https://kanjiapi.dev/v1/kanji/無')
+            const response = await fetch('https://kanjiapi.dev/v1/kanji/間')
             const newData = await response.json()
             // sets our localstorage and currentKanji object to be the data we just got back from the fetch request
             localStorage.setItem("kanjiobj", JSON.stringify(newData))
