@@ -21,6 +21,7 @@ export default function App(){
         // fetching inside useEffect would have been more desireable I think.
     // currently checks to see if we have some state in currentKanji and settingsData and if not populates with some default data.
     if(currentKanji == null){
+        const allowedGrades = settingsData.grade1
         const fetchData = async () => {
             const response = await fetch('https://kanjiapi.dev/v1/kanji/無')
             const newData = await response.json()
@@ -95,6 +96,7 @@ export default function App(){
     function handleSubmit(event){
         event.preventDefault()
         localStorage.setItem("settingsData", JSON.stringify(settingsData))
+        flipModal()
     }
 
     // just a function to flip a bool to show/hide our extra information
@@ -127,8 +129,8 @@ export default function App(){
             {currentKanji !== null ? <Meanings character={currentKanji} meanings={showingMeanings} onClick={flipMeanings}/> : null}
             {currentKanji !== null ? <SidebarLinks character={currentKanji} onClick={flipModal}/> : null}
             <AnimatePresence>
-            {currentKanji !== null && settingsData.grade1 !== null ? <SettingsModal showingModal={showingModal} handleChange={handleChange} handleSubmit={handleSubmit} settingsData={settingsData}/> : null}
-            {currentKanji !== null && settingsData.grade1 !== null ? <SettingsBg showingModal={showingModal} onClick={flipModal} /> : null}
+            {currentKanji !== null && settingsData.grade1 !== null ? <SettingsModal showingModal={showingModal} handleChange={handleChange} handleSubmit={handleSubmit} settingsData={settingsData} key="background2"/>  : null}
+            {currentKanji !== null && settingsData.grade1 !== null ? <SettingsBg showingModal={showingModal} onClick={flipModal} key="window2"/> : null}
             </AnimatePresence>
         </div>
     )

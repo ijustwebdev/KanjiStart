@@ -167,6 +167,7 @@ code {
   opacity: 0;
   height: 100vh;
   width: 100vw;
+  z-index: 1;
 }
 #modalWindow{
   background-color: #66669b;
@@ -178,12 +179,15 @@ code {
   right: 1vw;
   top: 1vw;
   padding: 1vw;
+  z-index: 2;
+  user-select: none;
 }
 #settingsForm{
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   align-items: flex-start;
+  font-size: 1rem;
 }
 #settingsForm label{
   margin-left: .1vw;
@@ -215,6 +219,21 @@ fieldset{
 }
 #secondFieldset{
   margin-top: 1vw;
+}
+#saveSettings{
+  border-radius: 0;
+  border: none;
+  text-align: center;
+  background-color: white;
+  color: #66669b;
+  font-size: 1.2rem;
+  margin-top: 1vw;
+  width: 100%;
+  height: 1.7vw;
+}
+#saveSettings:hover{
+  box-shadow: inset 0 0 2px 0 black;
+
 }
 @media(min-width: 1921px){
   #flexWrapper{

@@ -5,7 +5,7 @@ export default function SettingsBg(props){
     return(
         <AnimatePresence>
             {props.showingModal && 
-            <motion.div id="modalBackground" key="background"
+            <motion.div id="modalBackground"
                 onClick={props.onClick} 
                 initial={{opacity: 0}} 
                 transition={{duration: .2}} 

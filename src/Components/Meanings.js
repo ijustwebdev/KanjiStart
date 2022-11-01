@@ -22,12 +22,11 @@ export default function Meanings(props){
     //! this is probably a huge problem
     //! .slice seems to directly modify meaningElements which I do not think we want but in this case since we are not using 
     //! meaningElements again or anywhere else I think we can get away with it.
-    const meaningElements = englishReading.slice(1).map((meaning) => {
+    const meaningElements = englishReading.slice(1).map((meaning, index) => {
         return(
-            <motion.li className="subMeaning" initial={{ opacity: 0, y: "-20%"}} transition={{ duration: 0.2 }} animate={{y: "0%", opacity: "100%"}} exit={{y: "-20%", opacity: 0}} key={meaning}>{meaning}</motion.li>
+            <motion.li className="subMeaning" initial={{ opacity: 0, y: "-20%"}} transition={{ duration: 0.2 }} animate={{y: "0%", opacity: "100%"}} exit={{y: "-20%", opacity: 0}} key={index}>{meaning}</motion.li>
         )
     })
-    console.log(meaningElements)
     return(
         <div id="meaningDiv">
             {/* left column */}

@@ -5,7 +5,7 @@ export default function SettingsModal(props){
     return(
         <AnimatePresence>
             {props.showingModal && 
-                <motion.div id="modalWindow" key="window"
+                <motion.div id="modalWindow"
                 initial={{y: "-40vw"}} 
                 transition={{duration: .2, type: "spring", damping: 30, stiffness: 500}}
                 animate={{y: "0vw"}}
@@ -110,10 +110,9 @@ export default function SettingsModal(props){
                                 <label htmlFor="24hr">24 Hours</label>
                             </div>
                         </fieldset>
-                        <button>Save Settings</button>
+                        <button id="saveSettings">Save Settings</button>
                     </form>
                 </motion.div> }
         </AnimatePresence>
-            
     )
 }
