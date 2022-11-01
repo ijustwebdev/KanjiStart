@@ -1,9 +1,10 @@
-import React, { useState} from "react"
+import React, {useState} from "react"
 import Kanji from "./Kanji.js"
 import Meanings from "./Meanings.js"
 import SidebarLinks from "./SidebarLinks.js"
 import SettingsModal from "./SettingsModal.js"
-
+import {AnimatePresence} from "framer-motion"
+import SettingsBg from "./SettingsBg.js"
 
 
 export default function App(){
@@ -17,7 +18,7 @@ export default function App(){
     const [settingsData, setSettingsData] = useState(
         JSON.parse(localStorage.getItem("settingsData")) || null
     )
-
+        // fetching inside useEffect would have been more desireable I think.
     // currently checks to see if we have some state in currentKanji and settingsData and if not populates with some default data.
     if(currentKanji == null){
         const fetchData = async () => {
@@ -29,6 +30,7 @@ export default function App(){
             }
         fetchData()
     }
+
     // check if we have settings, if not generate them and store them in localStorage then set our settingsData default state.
     if(settingsData == null){
         const data = {
@@ -116,13 +118,18 @@ export default function App(){
     // fetch request to kanjiapi for the kanji we just grabbed with our random number
     // .setItem("kanjiobj") with our new kanji data
 
+    // TODO write function to randomly generate a kanji
+
     
     return(
         <div id="flexWrapper">
             {currentKanji !== null ? <Kanji character={currentKanji}/> : null} 
             {currentKanji !== null ? <Meanings character={currentKanji} meanings={showingMeanings} onClick={flipMeanings}/> : null}
             {currentKanji !== null ? <SidebarLinks character={currentKanji} onClick={flipModal}/> : null}
-            {currentKanji !== null && settingsData.grade1 !== null ? <SettingsModal showingModal={showingModal} onClick={flipModal} handleChange={handleChange} handleSubmit={handleSubmit} settingsData={settingsData}/> : null}
+            <AnimatePresence>
+            {currentKanji !== null && settingsData.grade1 !== null ? <SettingsModal showingModal={showingModal} handleChange={handleChange} handleSubmit={handleSubmit} settingsData={settingsData}/> : null}
+            {currentKanji !== null && settingsData.grade1 !== null ? <SettingsBg showingModal={showingModal} onClick={flipModal} /> : null}
+            </AnimatePresence>
         </div>
     )
 }
