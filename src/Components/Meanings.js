@@ -19,9 +19,7 @@ export default function Meanings(props){
     const grade = props.character.grade
 
     // TODO: add functionality to display additional readings/meanings to the user
-    //! this is probably a huge problem
-    //! .slice seems to directly modify meaningElements which I do not think we want but in this case since we are not using 
-    //! meaningElements again or anywhere else I think we can get away with it.
+    //! creates a shallow copy, not sure if ok in React
     const meaningElements = englishReading.slice(1).map((meaning, index) => {
         return(
             <motion.li className="subMeaning" initial={{ opacity: 0, y: "-20%"}} transition={{ duration: 0.2 }} animate={{y: "0%", opacity: "100%"}} exit={{y: "-20%", opacity: 0}} key={index}>{meaning}</motion.li>
