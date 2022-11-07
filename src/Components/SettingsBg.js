@@ -11,7 +11,7 @@ export default function SettingsBg(props){
                 transition={{duration: .2}} 
                 animate={{opacity: 0.7}} 
                 exit={{opacity: 0}}>
-                </motion.div>}
+            </motion.div>}
         </AnimatePresence>
     )
 }

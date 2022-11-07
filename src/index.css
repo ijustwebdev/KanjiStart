@@ -176,8 +176,8 @@ code {
   border-radius: .5vw;
   width: 11vw;
   position: fixed;
-  right: 1vw;
-  top: 1vw;
+  right: 2vw;
+  top: 2vh;
   padding: 1vw;
   z-index: 2;
   user-select: none;
@@ -233,7 +233,6 @@ fieldset{
 }
 #saveSettings:hover{
   box-shadow: inset 0 0 2px 0 black;
-
 }
 @media(min-width: 1921px){
   #flexWrapper{

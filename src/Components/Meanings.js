@@ -18,8 +18,6 @@ export default function Meanings(props){
     const jlpt = props.character.jlpt
     const grade = props.character.grade
 
-    // TODO: add functionality to display additional readings/meanings to the user
-    //! creates a shallow copy, not sure if ok in React
     const meaningElements = englishReading.slice(1).map((meaning, index) => {
         return(
             <motion.li className="subMeaning" initial={{ opacity: 0, y: "-20%"}} transition={{ duration: 0.2 }} animate={{y: "0%", opacity: "100%"}} exit={{y: "-20%", opacity: 0}} key={index}>{meaning}</motion.li>
