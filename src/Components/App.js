@@ -42,8 +42,7 @@ export default function App(){
     // gets a random grade. grabs the true booleans which is logically which grades the user has off/on. then picks one randomly and returns it.
     function getRandomGrade(){
         const selectedGrades = Object.keys(settingsData).filter(filterObj)
-        const rand = Math.floor((Math.random() * selectedGrades.length) + 1)
-        return rand
+        return Math.floor((Math.random() * selectedGrades.length) + 1)
     }
 
     // checks to see if we have some state in currentKanji that does not match null. if not, fetchData().
