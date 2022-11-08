@@ -114,7 +114,7 @@ export default function SettingsModal(props){
                         </form>
                     </motion.div> 
                 }
-                {props.showingError && <motion.div key="errorwindow" id="errorWindow" initial={{opacity: 0}} animate={{opacity: 100}} transition={{duration: .2}} exit={{opacity: 0}}> NAH DUDE PICK ONE FR FR</motion.div>}
+                {props.showingError && <motion.div key="error" id="errorWindow" initial={{opacity: 0}} animate={{opacity: 100}} transition={{duration: .2}} exit={{opacity: 0}}> NAH DUDE PICK ONE FR FR</motion.div>}
             </AnimatePresence>
     )
 }

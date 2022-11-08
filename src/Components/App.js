@@ -22,13 +22,20 @@ export default function App(){
     if(JSON.parse(localStorage.getItem("LastChangedDate")) == null){
         localStorage.setItem("LastChangedDate", JSON.stringify(dayjs()))
     }
-    
-    async function fetchData(){
-        const response = await fetch('https://kanjiapi.dev/v1/kanji/今')
-        const newData = await response.json()
-        // sets our localstorage and currentKanji object to be the data we just got back from the fetch request
-        localStorage.setItem("kanjiobj", JSON.stringify(newData))
-        setCurrentKanji(newData)
+
+    // check if we have settings, if not generate defaults and store them in localStorage and settingsData.
+    if(settingsData == null){
+        const data = {
+            grade1: true,
+            grade2: true,
+            grade3: true,
+            grade4: true,
+            grade5: true,
+            grade6: true,
+            hourInterval: 12
+        }
+        setSettingsData(data)
+        localStorage.setItem("settingsData", JSON.stringify(data))
     }
 
     // this function is to be called by .filter in our getRandomGrade() function. it returns all "true" keys in our settings object. 
@@ -44,38 +51,39 @@ export default function App(){
         const selectedGrades = Object.keys(settingsData).filter(filterObj)
         return Math.floor((Math.random() * selectedGrades.length) + 1)
     }
-
-    // checks to see if we have some state in currentKanji that does not match null. if not, fetchData().
-    if(currentKanji == null){
-        fetchData()
+    
+    // take our grade and pull a random kanji from the list 
+    async function getRandomKanji(gradeNum){
+        const response = await fetch(`https://kanjiapi.dev/v1/kanji/grade-${gradeNum}`)
+        let data = await response.json()
+        return Math.floor(Math.random() * data.length) * 1
+        
     }
 
-    // check if we have settings, if not generate defaults and store them in localStorage and settingsData.
-    if(settingsData == null){
-        const data = {
-            grade1: true,
-            grade2: true,
-            grade3: true,
-            grade4: true,
-            grade5: true,
-            grade6: true,
-            hourInterval: 12,
-            grade1length: 80,
-            grade2length: 160,
-            grade3length: 200,
-            grade4length: 200,
-            grade5length: 185,
-            grade6length: 181
-        }
-        setSettingsData(data)
-        localStorage.setItem("settingsData", JSON.stringify(data))
+    // take our character and get the info on it
+    async function getKanjiInfo(character){
+        const response = await fetch(`https://kanjiapi.dev/v1/kanji/${character}`)
+        const data = await response.json()
+        localStorage.setItem("kanjiobj", JSON.stringify(data))
+        setCurrentKanji(data)
+    }
+
+    
+
+    // checks to see if we have some state in currentKanji that does not match null.
+    // can't call the full stack because it tries to grab Object.keys(settingsData) before we populate it I think
+    // for now the first kanji will always be the same
+    if(currentKanji == null){
+        // set first kanji to grab as a default so we're not erroring with undefined when we check for it later. 
+        getKanjiInfo("始")
     }
 
     // this statement gets our LastChangedDate from localstorage and checks the difference in hours between that time and now. 
     // if it's >= our user's hour interval setting then fetch a new kanji and set the new LastChangedDate.
     const now = dayjs()
     if(now.diff(JSON.parse(localStorage.getItem("LastChangedDate")), "hour") >= settingsData.hourInterval){
-        getRandomGrade()
+        const character = getRandomKanji(getRandomGrade())
+        getKanjiInfo(character)
         localStorage.setItem("LastChangedDate", JSON.stringify(now))
     }
 
@@ -116,7 +124,6 @@ export default function App(){
     // need some way to import which useState set function is being called if possible
     function flipModal(){
         setShowingModal(prevModalState => !prevModalState)
-        
     }
 
     return(
