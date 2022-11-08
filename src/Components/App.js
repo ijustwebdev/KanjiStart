@@ -74,7 +74,7 @@ export default function App(){
     // can't call the full stack because it tries to grab Object.keys(settingsData) before we populate it I think
     // for now the first kanji will always be the same
     if(currentKanji == null){
-        // function
+        // set first kanji to grab as a default so we're not erroring with undefined when we check for it later. 
         getKanjiInfo("始")
     }
 
