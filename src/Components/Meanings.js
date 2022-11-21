@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from "framer-motion"
 
 export default function Meanings(props){
 
-    // %20 is url encoded space. %23 is url encoded #. required to grab the right page on jisho.
+    // %20 is url encoded space. %23 is url encoded "#". required to grab the correct page on jisho.
     const url = `https://www.jisho.org/search/${props.character.kanji}%20%23kanji`
 
     const kunReading = props.character.kun_readings

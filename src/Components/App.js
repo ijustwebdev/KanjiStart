@@ -68,12 +68,10 @@ export default function App(){
         setCurrentKanji(data)
     }
 
-    
-
     // checks to see if we have some state in currentKanji that does not match null.
     // can't call the full stack because it tries to grab Object.keys(settingsData) before we populate it I think
     // for now the first kanji will always be the same
-    if(currentKanji == null){
+    if(currentKanji === null){
         // set first kanji to grab as a default so we're not erroring with undefined when we check for it later. 
         getKanjiInfo("始")
     }
@@ -100,8 +98,7 @@ export default function App(){
         })
     }
     
-    // this function just sets the localstorage to what the user has selected in the settings menu
-    // TODO form validation. require at least one checkbox grade to be selected.
+    // this function just sets the localstorage to what the user has selected in the settings menu when they click the button
     function handleSubmit(event){
         event.preventDefault()
         // if user has less than (somehow) or equal to 0 "true" Booleans in settings they're attempting to select 0 grades. 
@@ -128,12 +125,12 @@ export default function App(){
 
     return(
         <div id="flexWrapper">
-            {currentKanji !== null ? <Kanji character={currentKanji}/> : null} 
-            {currentKanji !== null ? <Meanings character={currentKanji} meanings={showingMeanings} onClick={flipMeanings}/> : null}
-            {currentKanji !== null ? <SidebarLinks character={currentKanji} onClick={flipModal}/> : null}
+            {currentKanji ? <Kanji character={currentKanji}/> : <></>} 
+            {currentKanji ? <Meanings character={currentKanji} meanings={showingMeanings} onClick={flipMeanings}/> : <></>}
+            {currentKanji ? <SidebarLinks character={currentKanji} onClick={flipModal}/> : <></>}
             <AnimatePresence>
-            {currentKanji !== null && settingsData.grade1 !== null ? <SettingsModal showingModal={showingModal} handleChange={handleChange} handleSubmit={handleSubmit} settingsData={settingsData} key="background2"/>  : null}
-            {currentKanji !== null && settingsData.grade1 !== null ? <SettingsBg showingModal={showingModal} onClick={flipModal} key="window2"/> : null}
+            {currentKanji && settingsData.grade1 ? <SettingsModal showingModal={showingModal} handleChange={handleChange} handleSubmit={handleSubmit} settingsData={settingsData} key="background2"/>  : <React.Fragment key="background2"></React.Fragment>}
+            {currentKanji && settingsData.grade1 ? <SettingsBg showingModal={showingModal} onClick={flipModal} key="window2"/> : <React.Fragment key="window2"></React.Fragment>}
             </AnimatePresence>
         </div>
     )
