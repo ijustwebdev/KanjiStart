@@ -90,11 +90,13 @@ export default function App(){
     // gets our LastChangedDate from localstorage and checks the difference in hours between that time and now. 
     // if the difference is >= our user's hour interval setting then fetch a new kanji and set the new LastChangedDate.
     // https://day.js.org/docs/en/display/difference for dayjs .diff docs
+    if(settingsData !== null){
     const now = dayjs()
-    if(now.diff(JSON.parse(localStorage.getItem("LastChangedDate")), "hour") >= settingsData.hourInterval){
-        const character = getRandomKanji(getRandomGrade())
-        getKanjiInfo(character)
-        localStorage.setItem("LastChangedDate", JSON.stringify(now))
+        if(now.diff(JSON.parse(localStorage.getItem("LastChangedDate")), "hour") >= settingsData.hourInterval){
+            const character = getRandomKanji(getRandomGrade())
+            getKanjiInfo(character)
+            localStorage.setItem("LastChangedDate", JSON.stringify(now))
+        }
     }
 
     // handles submit event in our form and sets the localstorage to what the user has selected in the settings menu when they click submit
