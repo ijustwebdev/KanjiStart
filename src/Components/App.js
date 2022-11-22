@@ -17,13 +17,12 @@ export default function App(){
     const [settingsData, setSettingsData] = useState(
         JSON.parse(localStorage.getItem("settingsData")) || null
     )
-
     // check localstorage for a date. if we don't have one set one.
     if(JSON.parse(localStorage.getItem("LastChangedDate")) == null){
         localStorage.setItem("LastChangedDate", JSON.stringify(dayjs()))
     }
-
-    // check if we have settings, if not generate defaults and store them in localStorage and settingsData.
+    
+    // check if we have settings if not generate defaults and store them in localStorage and settingsData.
     if(settingsData == null){
         const data = {
             grade1: true,
@@ -38,28 +37,13 @@ export default function App(){
         localStorage.setItem("settingsData", JSON.stringify(data))
     }
 
-    // this function is to be called by .filter in our getRandomGrade() function. it returns all "true" keys in our settings object. 
-    function filterObj(key){
-        if(typeof settingsData[key] === "boolean" && settingsData[key] === true){
-            return true
-        }
-        return false
-    }
-
-    // gets a random grade. grabs the true booleans which is logically which grades the user has off/on. then picks one randomly and returns it.
-    function getRandomGrade(){
-        const selectedGrades = Object.keys(settingsData).filter(filterObj)
-        return Math.floor((Math.random() * selectedGrades.length) + 1)
-    }
-    
     // take our grade and pull a random kanji from the list 
     async function getRandomKanji(gradeNum){
         const response = await fetch(`https://kanjiapi.dev/v1/kanji/grade-${gradeNum}`)
         let data = await response.json()
         return Math.floor(Math.random() * data.length) * 1
-        
     }
-
+    
     // take our character and get the info on it
     async function getKanjiInfo(character){
         const response = await fetch(`https://kanjiapi.dev/v1/kanji/${character}`)
@@ -67,22 +51,26 @@ export default function App(){
         localStorage.setItem("kanjiobj", JSON.stringify(data))
         setCurrentKanji(data)
     }
-
-    // checks to see if we have some state in currentKanji that does not match null.
-    // can't call the full stack because it tries to grab Object.keys(settingsData) before we populate it I think
-    // for now the first kanji will always be the same
+    
+    // checks to see if we don't have a currentKanji and calls for a default one. 
     if(currentKanji === null){
         // set first kanji to grab as a default so we're not erroring with undefined when we check for it later. 
         getKanjiInfo("始")
     }
 
-    // this statement gets our LastChangedDate from localstorage and checks the difference in hours between that time and now. 
-    // if it's >= our user's hour interval setting then fetch a new kanji and set the new LastChangedDate.
-    const now = dayjs()
-    if(now.diff(JSON.parse(localStorage.getItem("LastChangedDate")), "hour") >= settingsData.hourInterval){
-        const character = getRandomKanji(getRandomGrade())
-        getKanjiInfo(character)
-        localStorage.setItem("LastChangedDate", JSON.stringify(now))
+    // gets a random grade. grabs the true booleans. then picks one randomly and returns it.
+    function getRandomGrade(){
+        const selectedGrades = Object.keys(settingsData).filter(filterObj)
+        return Math.floor((Math.random() * selectedGrades.length) + 1)
+    }
+
+
+    // this function is to be called by .filter in our getRandomGrade() function. it returns all "true" keys in our settings object. 
+    function filterObj(key){
+        if(typeof settingsData[key] === "boolean" && settingsData[key] === true){
+            return true
+        }
+        return false
     }
 
     // function to handle our settings form items being checked or selected.
@@ -93,15 +81,24 @@ export default function App(){
             return{
                 ...prevSettingsData,
                 [name]: type === "checkbox" ? checked : parseInt(value)
-                
             }
         })
     }
     
-    // this function just sets the localstorage to what the user has selected in the settings menu when they click the button
+    // gets our LastChangedDate from localstorage and checks the difference in hours between that time and now. 
+    // if the difference is >= our user's hour interval setting then fetch a new kanji and set the new LastChangedDate.
+    // https://day.js.org/docs/en/display/difference for dayjs .diff docs
+    const now = dayjs()
+    if(now.diff(JSON.parse(localStorage.getItem("LastChangedDate")), "hour") >= settingsData.hourInterval){
+        const character = getRandomKanji(getRandomGrade())
+        getKanjiInfo(character)
+        localStorage.setItem("LastChangedDate", JSON.stringify(now))
+    }
+
+    // handles submit event in our form and sets the localstorage to what the user has selected in the settings menu when they click submit
     function handleSubmit(event){
         event.preventDefault()
-        // if user has less than (somehow) or equal to 0 "true" Booleans in settings they're attempting to select 0 grades. 
+        // if user has less than (somehow) or 0 "true" Booleans in settings they're attempting to select 0 grades. 
         if(Object.keys(settingsData).filter(filterObj).length <= 0){
             // show an error message and let them fix it. 
             alert("Please select at least one grade.")
@@ -112,13 +109,11 @@ export default function App(){
         flipModal()
     }
 
-    // just a function to flip a bool to show/hide our extra information
+    // just a function to flip a bool to show/hide our extra information and another to flip the boolean state of our modal
     function flipMeanings(){
         setShowingMeanings(prevMeaning => !prevMeaning)
     }
 
-    // another simple function, could have made this more universal somehow but I need to set state for many objects. 
-    // need some way to import which useState set function is being called if possible
     function flipModal(){
         setShowingModal(prevModalState => !prevModalState)
     }
@@ -129,8 +124,8 @@ export default function App(){
             {currentKanji ? <Meanings character={currentKanji} meanings={showingMeanings} onClick={flipMeanings}/> : <></>}
             {currentKanji ? <SidebarLinks character={currentKanji} onClick={flipModal}/> : <></>}
             <AnimatePresence>
-            {currentKanji && settingsData.grade1 ? <SettingsModal showingModal={showingModal} handleChange={handleChange} handleSubmit={handleSubmit} settingsData={settingsData} key="background2"/>  : <React.Fragment key="background2"></React.Fragment>}
-            {currentKanji && settingsData.grade1 ? <SettingsBg showingModal={showingModal} onClick={flipModal} key="window2"/> : <React.Fragment key="window2"></React.Fragment>}
+            {currentKanji ? <SettingsModal showingModal={showingModal} handleChange={handleChange} handleSubmit={handleSubmit} settingsData={settingsData} key="background2"/>  : <React.Fragment key="background2"></React.Fragment>}
+            {currentKanji ? <SettingsBg showingModal={showingModal} onClick={flipModal} key="window2"/> : <React.Fragment key="window2"></React.Fragment>}
             </AnimatePresence>
         </div>
     )
