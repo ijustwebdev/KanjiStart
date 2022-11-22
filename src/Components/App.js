@@ -22,7 +22,7 @@ export default function App(){
         localStorage.setItem("LastChangedDate", JSON.stringify(dayjs()))
     }
     
-    // check if we have settings if not generate defaults and store them in localStorage and settingsData.
+    // check if we have settings. if not generate defaults and store them in localStorage and settingsData.
     if(settingsData == null){
         const data = {
             grade1: true,
@@ -40,6 +40,7 @@ export default function App(){
     // take our grade and pull a random kanji from the list 
     async function getRandomKanji(gradeNum){
         const response = await fetch(`https://kanjiapi.dev/v1/kanji/grade-${gradeNum}`)
+        console.warn("api called from getRandomKanji")
         let data = await response.json()
         return Math.floor(Math.random() * data.length) * 1
     }
@@ -47,6 +48,7 @@ export default function App(){
     // take our character and get the info on it
     async function getKanjiInfo(character){
         const response = await fetch(`https://kanjiapi.dev/v1/kanji/${character}`)
+        console.warn("api called from getKanjiInfo")
         const data = await response.json()
         localStorage.setItem("kanjiobj", JSON.stringify(data))
         setCurrentKanji(data)
@@ -121,7 +123,7 @@ export default function App(){
     return(
         <div id="flexWrapper">
             {currentKanji ? <Kanji character={currentKanji}/> : <></>} 
-            {currentKanji ? <Meanings character={currentKanji} meanings={showingMeanings} onClick={flipMeanings}/> : <></>}
+            {currentKanji && currentKanji != null ? <Meanings character={currentKanji} meanings={showingMeanings} onClick={flipMeanings}/> : <></>}
             {currentKanji ? <SidebarLinks character={currentKanji} onClick={flipModal}/> : <></>}
             <AnimatePresence>
             {currentKanji ? <SettingsModal showingModal={showingModal} handleChange={handleChange} handleSubmit={handleSubmit} settingsData={settingsData} key="background2"/>  : <React.Fragment key="background2"></React.Fragment>}
