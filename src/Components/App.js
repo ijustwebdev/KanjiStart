@@ -10,33 +10,63 @@ import dayjs from "dayjs"
 export default function App(){
     
     const [currentKanji, setCurrentKanji] = useState(
-        JSON.parse(localStorage.getItem("kanjiobj")) || null
+        JSON.parse(localStorage.getItem("kanjiobj")) || []
     )
     const [showingMeanings, setShowingMeanings] = useState(false)
     const [showingModal, setShowingModal] = useState(false)
-    const [settingsData, setSettingsData] = useState(
-        JSON.parse(localStorage.getItem("settingsData")) || null
-    )
+
+    // : previous call for settingsData. No longer needed.
+    // const [settingsData, setSettingsData] = useState(
+    //     JSON.parse(localStorage.getItem("settingsData")) || [false]
+    // )
+    
+    const [settingsData, setSettingsData] = useState(() => {
+        const localItem = JSON.parse(localStorage.getItem("settingsData"))
+        if(localItem){
+            console.log("settingsData true. grabbing from localstorage")
+            return JSON.parse(localStorage.getItem("settingsData"))
+        }
+        if(!localItem){
+            console.log("settingsData false. creating default settingsData")
+            const data = {
+                grade1: true,
+                grade2: true,
+                grade3: true,
+                grade4: true,
+                grade5: true,
+                grade6: true,
+                hourInterval: 12
+            }
+            localStorage.setItem("settingsData", JSON.stringify(data))
+            return data
+        }
+        else{
+            console.log("settingsData else fired?")
+            return console.log(settingsData)
+        }
+    })
+
+    // : previously served to generate default settings if we did not have any. no longer needed as our settingsData state is now generated on initialization. 
+    // check if we have settings. if not generate defaults and store them in localStorage and settingsData.
+    // if(settingsData[0] === false){
+    //     const data = {
+    //         grade1: true,
+    //         grade2: true,
+    //         grade3: true,
+    //         grade4: true,
+    //         grade5: true,
+    //         grade6: true,
+    //         hourInterval: 12
+    //     }
+    //     setSettingsData(data)
+    //     localStorage.setItem("settingsData", JSON.stringify(data))
+    // }
+
     // check localstorage for a date. if we don't have one set one.
     if(JSON.parse(localStorage.getItem("LastChangedDate")) == null){
         localStorage.setItem("LastChangedDate", JSON.stringify(dayjs()))
     }
     
-    // check if we have settings. if not generate defaults and store them in localStorage and settingsData.
-    if(settingsData == null){
-        const data = {
-            grade1: true,
-            grade2: true,
-            grade3: true,
-            grade4: true,
-            grade5: true,
-            grade6: true,
-            hourInterval: 12
-        }
-        setSettingsData(data)
-        localStorage.setItem("settingsData", JSON.stringify(data))
-    }
-
     // take our grade and pull a random kanji from the list 
     async function getRandomKanji(gradeNum){
         const response = await fetch(`https://kanjiapi.dev/v1/kanji/grade-${gradeNum}`)
@@ -90,12 +120,15 @@ export default function App(){
     // gets our LastChangedDate from localstorage and checks the difference in hours between that time and now. 
     // if the difference is >= our user's hour interval setting then fetch a new kanji and set the new LastChangedDate.
     // https://day.js.org/docs/en/display/difference for dayjs .diff docs
-    if(settingsData !== null){
+    if(settingsData.hourInterval){
     const now = dayjs()
         if(now.diff(JSON.parse(localStorage.getItem("LastChangedDate")), "hour") >= settingsData.hourInterval){
-            const character = getRandomKanji(getRandomGrade())
-            getKanjiInfo(character)
-            localStorage.setItem("LastChangedDate", JSON.stringify(now))
+            async function getNewKanji(){
+                const character = await getRandomKanji(getRandomGrade())
+                await getKanjiInfo(character)
+                localStorage.setItem("LastChangedDate", JSON.stringify(now))
+            }
+            getNewKanji()
         }
     }
 
@@ -125,7 +158,7 @@ export default function App(){
     return(
         <div id="flexWrapper">
             {currentKanji ? <Kanji character={currentKanji}/> : <></>} 
-            {currentKanji && currentKanji != null ? <Meanings character={currentKanji} meanings={showingMeanings} onClick={flipMeanings}/> : <></>}
+            {currentKanji ? <Meanings character={currentKanji} meanings={showingMeanings} onClick={flipMeanings}/> : <></>}
             {currentKanji ? <SidebarLinks character={currentKanji} onClick={flipModal}/> : <></>}
             <AnimatePresence>
             {currentKanji ? <SettingsModal showingModal={showingModal} handleChange={handleChange} handleSubmit={handleSubmit} settingsData={settingsData} key="background2"/>  : <React.Fragment key="background2"></React.Fragment>}
