@@ -14,24 +14,25 @@ export default function App(){
         // : capitalized kanjiobj to become kanjiObj
         const localKanji = JSON.parse(localStorage.getItem("kanjiObj"))
         if(localKanji){
-            console.log("localKanji true. grabbing from localstorage.")
+            console.log("localKanji true. using object in localstorage.")
             return localKanji
         }
         if(!localKanji){
-            console.log("localKanji false. using default dataset")
-            return ({
+            console.log("localKanji false. using default dataset for localKanji")
+            const dataset = ({
                 grade: 3,
                 jlpt: 3,
                 kanji: "始",
                 kun_readings: ["はじ.める", "-はじ.める", "はじ.まる"],
-                meanings: ["commence", "begin"],
-                name_readings: ["もと"],
                 on_readings: ["シ"],
+                meanings: ["commence", "begin"],
                 stroke_count: 8
             })
+            localStorage.setItem("kanjiObj", JSON.stringify(dataset))
+            return dataset
         }
     }
-        // : previous code to grab localstorage item or use an empty array. was previously using "null" for checks.
+        // : previous code to grab localstorage item or use an empty array. was previously using "null" for checks. No longer needed.
         // JSON.parse(localStorage.getItem("kanjiobj")) || []
     )
     const [showingMeanings, setShowingMeanings] = useState(false)
@@ -45,11 +46,11 @@ export default function App(){
     const [settingsData, setSettingsData] = useState(() => {
         const localItem = JSON.parse(localStorage.getItem("settingsData"))
         if(localItem){
-            console.log("settingsData true. grabbing from localstorage")
+            console.log("settingsData true. using object from localstorage")
             return localItem
         }
         if(!localItem){
-            console.log("settingsData false. creating default settingsData")
+            console.log("settingsData false. using default dataset for settingsData")
             const data = {
                 grade1: true,
                 grade2: true,
@@ -63,7 +64,7 @@ export default function App(){
             return data
         }
         else{
-            console.log("settingsData else fired?")
+            console.log("settingsData else fired something might be wrong?")
             return console.log(settingsData)
         }
     })
@@ -84,6 +85,27 @@ export default function App(){
     //     localStorage.setItem("settingsData", JSON.stringify(data))
     // }
 
+    // gets our LastChangedDate from localstorage and checks the difference in hours between that time and now. 
+    // if the difference is >= our user's hour interval setting then fetch a new kanji and set the new LastChangedDate.
+    // https://day.js.org/docs/en/display/difference for dayjs .diff docs
+    if(settingsData){
+        const now = dayjs()
+        if(now.diff(JSON.parse(localStorage.getItem("LastChangedDate")), "hour") >= settingsData.hourInterval){
+            async function getNewKanji(){
+                const grade = getRandomGrade()
+                const character = await getRandomKanji(grade)
+                console.warn("character is " + character)
+                const info = await getKanjiInfo(character)
+                localStorage.setItem("LastChangedDate", JSON.stringify(now))
+                return info
+            }
+            getNewKanji()
+        }
+    }
+    else if (!settingsData){
+        return console.log("settingsData falsy something's wrong.")
+    }
+
     // check localstorage for a date. if we don't have one set one.
     if(JSON.parse(localStorage.getItem("LastChangedDate")) == null){
         localStorage.setItem("LastChangedDate", JSON.stringify(dayjs()))
@@ -93,8 +115,8 @@ export default function App(){
     async function getRandomKanji(gradeNum){
         const response = await fetch(`https://kanjiapi.dev/v1/kanji/grade-${gradeNum}`)
         console.warn("api called from getRandomKanji")
-        let data = await response.json()
-        return Math.floor(Math.random() * data.length) * 1
+        const randomData = await response.json()
+        return randomData[Math.floor(Math.random() * randomData.length) * 1]
     }
     
     // take our character and get the info on it
@@ -106,11 +128,12 @@ export default function App(){
         setCurrentKanji(data)
     }
     
+    // : Unused, previously filled in default data if we had none. We now generate defaults if we don't have them on init.
     // checks to see if we don't have a currentKanji and calls for a default one. 
-    if(currentKanji === null){
+    // if(currentKanji === null){
         // set first kanji to grab as a default so we're not erroring with undefined when we check for it later. 
-        getKanjiInfo("始")
-    }
+    //     getKanjiInfo("始")
+    // }
 
     // gets a random grade. grabs the true booleans. then picks one randomly and returns it.
     function getRandomGrade(){
@@ -139,20 +162,7 @@ export default function App(){
         })
     }
     
-    // gets our LastChangedDate from localstorage and checks the difference in hours between that time and now. 
-    // if the difference is >= our user's hour interval setting then fetch a new kanji and set the new LastChangedDate.
-    // https://day.js.org/docs/en/display/difference for dayjs .diff docs
-    if(settingsData.hourInterval){
-    const now = dayjs()
-        if(now.diff(JSON.parse(localStorage.getItem("LastChangedDate")), "hour") >= settingsData.hourInterval){
-            async function getNewKanji(){
-                const character = await getRandomKanji(getRandomGrade())
-                await getKanjiInfo(character)
-                localStorage.setItem("LastChangedDate", JSON.stringify(now))
-            }
-            getNewKanji()
-        }
-    }
+    
 
     // handles submit event in our form and sets the localstorage to what the user has selected in the settings menu when they click submit
     function handleSubmit(event){
