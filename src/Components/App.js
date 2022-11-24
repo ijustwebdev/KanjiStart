@@ -33,14 +33,14 @@ export default function App(){
         }
     }
         // : previous code to grab localstorage item or use an empty array. was previously using "null" for checks. No longer needed.
-        // JSON.parse(localStorage.getItem("kanjiobj")) || []
+        // JSON.parse(localStorage.getItem("kanjiobj")) || null
     )
     const [showingMeanings, setShowingMeanings] = useState(false)
     const [showingModal, setShowingModal] = useState(false)
 
     // : previous call for settingsData. No longer needed.
     // const [settingsData, setSettingsData] = useState(
-    //     JSON.parse(localStorage.getItem("settingsData")) || [false]
+    //     JSON.parse(localStorage.getItem("settingsData")) || null
     // )
 
     const [settingsData, setSettingsData] = useState(() => {
@@ -85,8 +85,9 @@ export default function App(){
     //     localStorage.setItem("settingsData", JSON.stringify(data))
     // }
 
-    // gets our lastChangedDate from localstorage and checks the difference in hours between that time and now. 
-    // if the difference is >= our user's hour interval setting then fetch a new kanji and set the new lastChangedDate.
+    // this conditional first checks to ensure we have settingsData before checking the difference between when this runs and when we last retrieved a new kanji from the api
+    // TODO check for redundancy of conditional
+    // if the difference is >= our user's hour interval setting then fetch and return a new kanji and set the new lastChangedDate to be the current time.
     // https://day.js.org/docs/en/display/difference for dayjs .diff docs
     if(settingsData){
         const now = dayjs()
