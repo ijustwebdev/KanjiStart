@@ -85,18 +85,18 @@ export default function App(){
     //     localStorage.setItem("settingsData", JSON.stringify(data))
     // }
 
-    // gets our LastChangedDate from localstorage and checks the difference in hours between that time and now. 
-    // if the difference is >= our user's hour interval setting then fetch a new kanji and set the new LastChangedDate.
+    // gets our lastChangedDate from localstorage and checks the difference in hours between that time and now. 
+    // if the difference is >= our user's hour interval setting then fetch a new kanji and set the new lastChangedDate.
     // https://day.js.org/docs/en/display/difference for dayjs .diff docs
     if(settingsData){
         const now = dayjs()
-        if(now.diff(JSON.parse(localStorage.getItem("LastChangedDate")), "hour") >= settingsData.hourInterval){
+        if(now.diff(JSON.parse(localStorage.getItem("lastChangedDate")), "hour") >= settingsData.hourInterval){
             async function getNewKanji(){
                 const grade = getRandomGrade()
                 const character = await getRandomKanji(grade)
                 console.warn("character is " + character)
                 const info = await getKanjiInfo(character)
-                localStorage.setItem("LastChangedDate", JSON.stringify(now))
+                localStorage.setItem("lastChangedDate", JSON.stringify(now))
                 return info
             }
             getNewKanji()
@@ -107,8 +107,8 @@ export default function App(){
     }
 
     // check localstorage for a date. if we don't have one set one.
-    if(JSON.parse(localStorage.getItem("LastChangedDate")) == null){
-        localStorage.setItem("LastChangedDate", JSON.stringify(dayjs()))
+    if(JSON.parse(localStorage.getItem("lastChangedDate")) == null){
+        localStorage.setItem("lastChangedDate", JSON.stringify(dayjs()))
     }
     
     // take our grade and pull a random kanji from the list 
@@ -161,8 +161,6 @@ export default function App(){
             }
         })
     }
-    
-    
 
     // handles submit event in our form and sets the localstorage to what the user has selected in the settings menu when they click submit
     function handleSubmit(event){
