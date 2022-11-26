@@ -17,7 +17,7 @@ export default function Meanings(props){
     const strokeCount = props.character.stroke_count
     const jlpt = props.character.jlpt
     const grade = props.character.grade
-
+    // Create meaningElements array by first removing the first entry since we're showing the first entry already. 
     const meaningElements = englishReading.slice(1).map((meaning, index) => {
         return(
             <motion.li className="subMeaning" initial={{ opacity: 0, y: "-20%"}} transition={{ duration: 0.2 }} animate={{y: "0%", opacity: "100%"}} exit={{y: "-20%", opacity: 0}} key={index}>{meaning}</motion.li>
@@ -58,7 +58,7 @@ export default function Meanings(props){
                 {/* broke this component down because I wanted to make sure I got the onclick correct */}
                 {
                 meaningElements.length >= 1 ? 
-                    <div id="conditionalMeanings" className="buttons" onClick={props.onClick} >
+                    <div id="conditionalMeanings" className="buttons" onClick={props.onClick} tabIndex={1}>
                     <span className="material-symbols-outlined moreMeanings" id="darkIcon">expand_more</span>
                     <span id="moreMeanings">MORE MEANINGS</span>
                     </div> 
