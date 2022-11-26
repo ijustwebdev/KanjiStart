@@ -41,6 +41,7 @@ code {
 /* :Meanings.js */
 #meaningDiv{
   display: flex;
+  justify-content: space-evenly;
   align-items: center;
   height: 100vh;
   width: 50vw;
@@ -50,13 +51,13 @@ code {
 .meaningChildDiv{
   display: flex;
   flex-direction: column;
-  margin-left: 5vw;
-  margin-top: 20vh;
-  height: 50vh;
+  justify-content: center;
+  width: 50%;
 }
 .entryEl{
   display: flex;
   align-items: baseline;
+  min-height: 8vh;
 }
 #kunyomiLabel, #onyomiLabel{
   position: fixed;
@@ -81,7 +82,12 @@ code {
   font-size: 1vw;
   list-style-type: square;
   line-height: 1.3;
+  margin-top: 2vh;
   padding-left: .2vw;
+}
+#extraMeanings{
+  position: fixed;
+  margin-top: 45vh;
 }
 /* :BUTTONS inside Meanings.js */
 .buttons{
@@ -101,11 +107,11 @@ code {
   margin-top: .5vw;
   display: flex;
   height: 2vw;
-  width: 15vw;
+  max-width: 15vw;
   border-radius: .1vw;
   background-color: transparent;
   color: #66669b;
-  border: solid 3px #66669b;
+  border: solid .2vh #66669b;
   /* box-shadow: rgba(102, 102, 155, 1) 0px 0px 3px 0px; */
   -webkit-user-select: none; /* Safari */        
   -moz-user-select: none; /* Firefox */
@@ -115,9 +121,6 @@ code {
 #jishoSearch>a{
   cursor: pointer;
 }
-#jishoSearch{
-  height: 2vw;
-}
 .moreMeanings, #link{
   font-size: 1.5vw;
   max-height: 100%;
@@ -126,9 +129,6 @@ code {
 #moreMeanings, #searchLinkText{
   font-size: 1vw;
   margin: auto 0;
-}
-#extraMeanings{
-  margin-top: 1vw;
 }
 #jishoSearch>a{
   text-decoration: none;
