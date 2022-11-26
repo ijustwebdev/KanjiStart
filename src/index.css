@@ -86,6 +86,7 @@ code {
 #extraMeanings{
   position: fixed;
   margin-top: 30vh;
+  user-select: none;
 }
 /* :BUTTONS inside Meanings.js */
 .buttons{
