@@ -14,11 +14,9 @@ export default function App(){
         // : capitalized kanjiobj to become kanjiObj
         const localKanji = JSON.parse(localStorage.getItem("kanjiObj"))
         if(localKanji){
-            console.log("localKanji true. using object in localstorage.")
             return localKanji
         }
         if(!localKanji){
-            console.log("localKanji false. using default dataset for localKanji")
             const dataset = ({
                 grade: 3,
                 jlpt: 3,
@@ -46,11 +44,9 @@ export default function App(){
     const [settingsData, setSettingsData] = useState(() => {
         const localItem = JSON.parse(localStorage.getItem("settingsData"))
         if(localItem){
-            console.log("settingsData true. using object from localstorage")
             return localItem
         }
         if(!localItem){
-            console.log("settingsData false. using default dataset for settingsData")
             const data = {
                 grade1: true,
                 grade2: true,
