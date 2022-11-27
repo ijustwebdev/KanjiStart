@@ -91,7 +91,6 @@ export default function App(){
             async function getNewKanji(){
                 const grade = getRandomGrade()
                 const character = await getRandomKanji(grade)
-                console.warn("character is " + character)
                 const info = await getKanjiInfo(character)
                 localStorage.setItem("lastChangedDate", JSON.stringify(now))
                 return info
@@ -119,7 +118,6 @@ export default function App(){
     // take our character and get the info on it
     async function getKanjiInfo(character){
         const response = await fetch(`https://kanjiapi.dev/v1/kanji/${character}`)
-        console.warn("api called from getKanjiInfo")
         const data = await response.json()
         localStorage.setItem("kanjiObj", JSON.stringify(data))
         setCurrentKanji(data)
