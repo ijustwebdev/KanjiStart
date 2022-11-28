@@ -110,7 +110,6 @@ export default function App(){
     // take our grade and pull a random kanji from the list 
     async function getRandomKanji(gradeNum){
         const response = await fetch(`https://kanjiapi.dev/v1/kanji/grade-${gradeNum}`)
-        console.warn("api called from getRandomKanji")
         const randomData = await response.json()
         return randomData[Math.floor(Math.random() * randomData.length) * 1]
     }
