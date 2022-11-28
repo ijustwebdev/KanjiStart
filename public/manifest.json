@@ -1,15 +1,16 @@
 {
-  "name": "KanjiStart",
-  "description": "Replaces the default New Tab in Chrome with a tab display a new kanji at selectable intervals.",
-  "version": "0.1.0",
-  "manifest_version": 3,
-  "icons": {
-    "16": "icon16.png",
-    "32": "icon32.png",
-    "48": "icon48.png",
-    "128": "icon128.png"
-  },
-  "chrome_url_overrides": {
-    "newtab": "index.html"
-  }
+	"name": "KanjiStart",
+	"version": "0.1.1",
+	"manifest_version": 2,
+	"description": "Replaces your New Tab page with a display for a randomly chosen kanji and some information about it.",
+	"icons": {
+		"16": "icon16.png",
+        "32": "icon32.png",
+        "48": "icon48.png",
+        "128": "icon128.png"
+	},
+	"chrome_url_overrides":
+	{
+		"newtab": "index.html"
+	}
 }
