@@ -11,7 +11,6 @@ export default function App(){
     
     // TODO rewrite below useState inits into our arrow functions. clean up redundant blocks. ensure functionality.
     const [currentKanji, setCurrentKanji] = useState(() => {
-        // : capitalized kanjiobj to become kanjiObj
         const localKanji = JSON.parse(localStorage.getItem("kanjiObj"))
         if(localKanji){
             return localKanji
@@ -30,16 +29,9 @@ export default function App(){
             return dataset
         }
     }
-        // : previous code to grab localstorage item or use an empty array. was previously using "null" for checks. No longer needed.
-        // JSON.parse(localStorage.getItem("kanjiobj")) || null
     )
     const [showingMeanings, setShowingMeanings] = useState(false)
     const [showingModal, setShowingModal] = useState(false)
-
-    // : previous call for settingsData. No longer needed.
-    // const [settingsData, setSettingsData] = useState(
-    //     JSON.parse(localStorage.getItem("settingsData")) || null
-    // )
 
     const [settingsData, setSettingsData] = useState(() => {
         const localItem = JSON.parse(localStorage.getItem("settingsData"))
@@ -65,24 +57,7 @@ export default function App(){
         }
     })
 
-    // : previously served to generate default settings if we did not have any. no longer needed as our settingsData state is now generated on initialization. 
-    // check if we have settings. if not generate defaults and store them in localStorage and settingsData.
-    // if(settingsData[0] === false){
-    //     const data = {
-    //         grade1: true,
-    //         grade2: true,
-    //         grade3: true,
-    //         grade4: true,
-    //         grade5: true,
-    //         grade6: true,
-    //         hourInterval: 12
-    //     }
-    //     setSettingsData(data)
-    //     localStorage.setItem("settingsData", JSON.stringify(data))
-    // }
-
     // this conditional first checks to ensure we have settingsData before checking the difference between when this runs and when we last retrieved a new kanji from the api
-    // TODO check for redundancy of conditional
     // if the difference is >= our user's hour interval setting then fetch and return a new kanji and set the new lastChangedDate to be the current time.
     // https://day.js.org/docs/en/display/difference for dayjs .diff docs
     if(settingsData){
@@ -122,13 +97,6 @@ export default function App(){
         setCurrentKanji(data)
     }
     
-    // : Unused, previously filled in default data if we had none. We now generate defaults if we don't have them on init.
-    // checks to see if we don't have a currentKanji and calls for a default one. 
-    // if(currentKanji === null){
-        // set first kanji to grab as a default so we're not erroring with undefined when we check for it later. 
-    //     getKanjiInfo("始")
-    // }
-
     // gets a random grade. grabs the true booleans. then picks one randomly and returns it.
     function getRandomGrade(){
         const selectedGrades = Object.keys(settingsData).filter(filterObj)
