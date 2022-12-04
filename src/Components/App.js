@@ -28,8 +28,22 @@ export default function App(){
             localStorage.setItem("kanjiObj", JSON.stringify(dataset))
             return dataset
         }
-    }
-    )
+    })
+    const [showingColorMenu, setShowingColorMenu] = useState(false)
+    const [colorSettings, setColorSettings] = useState(() =>{
+        const localColorSettings = JSON.parse(localStorage.getItem("colorSettings"))
+        if(localColorSettings){
+            return localColorSettings
+        }
+        if(!localColorSettings){
+            const color = ({
+                primary: "#1E2935",
+                secondary: "#66669B"
+            })
+            localStorage.setItem("colorSettings", JSON.stringify(color))
+            return color
+        }
+    })
     const [showingMeanings, setShowingMeanings] = useState(false)
     const [showingModal, setShowingModal] = useState(false)
 
@@ -149,9 +163,10 @@ export default function App(){
 
     return(
         <div id="flexWrapper">
-            {currentKanji ? <Kanji character={currentKanji}/> : <></>} 
+            {currentKanji ? <Kanji character={currentKanji} colorSettings={colorSettings} /> : <></>} 
             {currentKanji ? <Meanings character={currentKanji} meanings={showingMeanings} onClick={flipMeanings}/> : <></>}
-            {currentKanji ? <SidebarLinks character={currentKanji} onClick={flipModal}/> : <></>}
+            {currentKanji ? <SidebarLinks character={currentKanji} onClick={flipModal} /> : <></>}
+            {currentKanji ? <ColorMenu></ColorMenu> : <React.Fragment></React.Fragment>}
             <AnimatePresence>
             {currentKanji ? <SettingsModal showingModal={showingModal} handleChange={handleChange} handleSubmit={handleSubmit} settingsData={settingsData} key="background2"/>  : <React.Fragment key="background2"></React.Fragment>}
             {currentKanji ? <SettingsBg showingModal={showingModal} onClick={flipModal} key="window2"/> : <React.Fragment key="window2"></React.Fragment>}
