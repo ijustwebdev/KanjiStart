@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useState} from "react"
 import { AnimatePresence, motion } from "framer-motion"
 
 export default function Meanings(props){
@@ -23,6 +23,19 @@ export default function Meanings(props){
             <motion.li className="subMeaning" initial={{ opacity: 0, y: "-20%"}} transition={{ duration: 0.2 }} animate={{y: "0%", opacity: "100%"}} exit={{y: "-20%", opacity: 0}} key={index}>{meaning}</motion.li>
         )
     })
+
+    const [hoverState, setHoverState] = useState(false)
+    const [hoverState2, setHoverState2] = useState(false)
+
+    const handleMouseEnterLeave = () => {
+        setHoverState(prevState => !prevState)
+    }
+    const handleMouseEnterLeave2 = () => {
+        setHoverState2(prevState => !prevState)
+    }
+
+
+
     return(
         <div id="meaningDiv">
             {/* left column */}
@@ -58,12 +71,12 @@ export default function Meanings(props){
                 {/* broke this component down because I wanted to make sure I got the onclick correct */}
                 {
                 meaningElements.length >= 1 ? 
-                    <div id="conditionalMeanings" className="buttons" onClick={props.onClick} tabIndex={1}>
-                    <span className="material-symbols-outlined moreMeanings" id="darkIcon">expand_more</span>
-                    <span id="moreMeanings">MORE MEANINGS</span>
+                    <div id="conditionalMeanings" className="buttons" onClick={props.onClick} tabIndex={1} style={{color: props.colorSettings.primary, border: "solid .2vh " + props.colorSettings.primary, backgroundColor: hoverState2 ? props.colorSettings.primary : "transparent"}} onMouseEnter={handleMouseEnterLeave2} onMouseLeave={handleMouseEnterLeave2}>
+                    <span className="material-symbols-outlined moreMeanings" id="darkIcon" style={{color: hoverState2 ? props.colorSettings.secondary : props.colorSettings.primary}} >expand_more</span>
+                    <span id="moreMeanings" style={{color: hoverState2 ? props.colorSettings.secondary : props.colorSettings.primary}}>MORE MEANINGS</span>
                     </div> 
                 :
-                null
+                <></>
                 }
                 {/* required tags to animate meaningElements out */}
                 <AnimatePresence>
@@ -76,11 +89,11 @@ export default function Meanings(props){
                 <div className="entryEl"><span className="meaningElLabel">JLPT</span><span className="meaningElInfo"><span className="meaningDividers">-</span>{jlpt}</span></div>
                 <div className="entryEl"><span className="meaningElLabel">GRADE</span><span className="meaningElInfo"><span className="meaningDividers">-</span>{grade}</span></div>
 
-                <div id="jishoSearch">
-                    <a href={url} className="buttons">
+                <div id="jishoSearch" >
+                    <a href={url} className="buttons" style={{color: props.colorSettings.primary, border: "solid .2vh " + props.colorSettings.primary, backgroundColor: hoverState ? props.colorSettings.primary : "transparent"}} onMouseEnter={handleMouseEnterLeave} onMouseLeave={handleMouseEnterLeave}>
                     {/* <span className="material-symbols-outlined search" id="searchIcon">search</span> */}
-                    <span className="material-symbols-outlined" id="link">link</span>
-                    <span id="searchLinkText">MORE AT JISHO.ORG</span>
+                    <span className="material-symbols-outlined" id="link" style={{color: hoverState ? props.colorSettings.secondary : props.colorSettings.primary}} >link</span>
+                    <span id="searchLinkText"style={{color: hoverState ? props.colorSettings.secondary : props.colorSettings.primary}} >MORE AT JISHO.ORG</span>
                     </a>
                 </div>
 

@@ -1,15 +1,18 @@
+// deps and required
 import React, {useState} from "react"
+import {AnimatePresence} from "framer-motion"
+import dayjs from "dayjs"
+
+// components 
 import Kanji from "./Kanji.js"
 import Meanings from "./Meanings.js"
 import SidebarLinks from "./SidebarLinks.js"
 import SettingsModal from "./SettingsModal.js"
-import {AnimatePresence} from "framer-motion"
+import ColorMenu from "./ColorMenu.js"
 import SettingsBg from "./SettingsBg.js"
-import dayjs from "dayjs"
 
 export default function App(){
     
-    // TODO rewrite below useState inits into our arrow functions. clean up redundant blocks. ensure functionality.
     const [currentKanji, setCurrentKanji] = useState(() => {
         const localKanji = JSON.parse(localStorage.getItem("kanjiObj"))
         if(localKanji){
@@ -37,15 +40,15 @@ export default function App(){
         }
         if(!localColorSettings){
             const color = ({
-                primary: "#1E2935",
-                secondary: "#66669B"
+                primary: "#66669B",
+                secondary: "#1E2935"
             })
             localStorage.setItem("colorSettings", JSON.stringify(color))
             return color
         }
     })
     const [showingMeanings, setShowingMeanings] = useState(false)
-    const [showingModal, setShowingModal] = useState(false)
+    const [showingSettingsMenu, setShowingSettingsMenu] = useState(false)
 
     const [settingsData, setSettingsData] = useState(() => {
         const localItem = JSON.parse(localStorage.getItem("settingsData"))
@@ -111,7 +114,7 @@ export default function App(){
         setCurrentKanji(data)
     }
     
-    // gets a random grade. grabs the true booleans. then picks one randomly and returns it.
+    // gets a random grade by retrieving the true bools from our settingsData right now. then picks one randomly and returns it.
     function getRandomGrade(){
         const selectedGrades = Object.keys(settingsData).filter(filterObj)
         return Math.floor((Math.random() * selectedGrades.length) + 1)
@@ -149,27 +152,66 @@ export default function App(){
         }
         // user has at least one grade selected. save and close the modal.
         localStorage.setItem("settingsData", JSON.stringify(settingsData))
-        flipModal()
+        hideBGandMenus()
     }
 
-    // just a function to flip a bool to show/hide our extra information and another to flip the boolean state of our modal
+    // handles color submission
+    function handleColorSubmit(event){
+        event.preventDefault()
+        localStorage.setItem("colorSettings", JSON.stringify(colorSettings))
+        hideBGandMenus()
+
+    }
+    
+    // just functions to flip state
     function flipMeanings(){
         setShowingMeanings(prevMeaning => !prevMeaning)
     }
 
-    function flipModal(){
-        setShowingModal(prevModalState => !prevModalState)
+    function flipSettingsMenu(){
+        setShowingSettingsMenu(prevState => !prevState)
     }
 
+    function hideBGandMenus(){
+        setShowingColorMenu(false)
+        setShowingSettingsMenu(false)
+    }
+
+    function flipColorModal(){
+        setShowingColorMenu(prevModalState => !prevModalState)
+    }
+
+    // this function sets the color state of the primary or secondary color. I dont know how to make this shorter right now.
+    function setColorPrimary(color){
+        setColorSettings(prevSettings => {
+           return { 
+            ...prevSettings,
+            primary: color
+            }
+        })
+    }
+
+    function setColorSecondary(color){
+        setColorSettings(prevSettings =>{
+           return { 
+            ...prevSettings,
+            secondary: color
+            }
+        })
+    }
+
+
     return(
-        <div id="flexWrapper">
+        <div id="flexWrapper" style={{color: colorSettings.primary, backgroundColor: colorSettings.secondary}}>
             {currentKanji ? <Kanji character={currentKanji} colorSettings={colorSettings} /> : <></>} 
-            {currentKanji ? <Meanings character={currentKanji} meanings={showingMeanings} onClick={flipMeanings}/> : <></>}
-            {currentKanji ? <SidebarLinks character={currentKanji} onClick={flipModal} /> : <></>}
-            {currentKanji ? <ColorMenu></ColorMenu> : <React.Fragment></React.Fragment>}
+            {currentKanji ? <Meanings character={currentKanji} meanings={showingMeanings} onClick={flipMeanings} colorSettings={colorSettings} /> : <></>}
+            {currentKanji ? <SidebarLinks character={currentKanji} settingsOnClick={flipSettingsMenu} colorOnClick={flipColorModal} colorSettings={colorSettings}/> : <></>}
             <AnimatePresence>
-            {currentKanji ? <SettingsModal showingModal={showingModal} handleChange={handleChange} handleSubmit={handleSubmit} settingsData={settingsData} key="background2"/>  : <React.Fragment key="background2"></React.Fragment>}
-            {currentKanji ? <SettingsBg showingModal={showingModal} onClick={flipModal} key="window2"/> : <React.Fragment key="window2"></React.Fragment>}
+            
+            {currentKanji ? <ColorMenu showingColorMenu={showingColorMenu} colorSettings={colorSettings} setColorPrimary={setColorPrimary} setColorSecondary={setColorSecondary} handleSubmit={handleColorSubmit} key="colorMenu"></ColorMenu> : <React.Fragment key="colorMenu"></React.Fragment>}
+            
+            {currentKanji ? <SettingsModal showingModal={showingSettingsMenu} handleChange={handleChange} handleSubmit={handleSubmit} settingsData={settingsData} colorSettings={colorSettings} key="background2"/>  : <React.Fragment key="background2"></React.Fragment>}
+            {currentKanji ? <SettingsBg showingModal={showingSettingsMenu} onClick={hideBGandMenus} showingColorMenu={showingColorMenu} key="window2"/> : <React.Fragment key="window2"></React.Fragment>}
             </AnimatePresence>
         </div>
     )

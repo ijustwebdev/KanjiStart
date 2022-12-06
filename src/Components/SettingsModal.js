@@ -1,7 +1,14 @@
-import React from "react"
+import React, {useState} from "react"
 import {AnimatePresence, motion} from "framer-motion"
 
 export default function SettingsModal(props){
+    
+    const [hoverState4, setHoverState4] = useState(false)
+
+    function handleMouseEnterLeave(){
+        setHoverState4(prevState => !prevState)
+    }
+
     return(
             <AnimatePresence>
                 {props.showingModal && 
@@ -110,11 +117,10 @@ export default function SettingsModal(props){
                                     <label htmlFor="24hr">24 Hours</label>
                                 </div>
                             </fieldset>
-                            <button id="saveSettings">Save Settings</button>
+                            <button id="saveSettings" style={{color: hoverState4 ? "#2b2b2b" : "white", border: "solid .2vh  white" , backgroundColor: hoverState4 ?  "white" : "transparent"}} onMouseEnter={handleMouseEnterLeave} onMouseLeave={handleMouseEnterLeave}>Save Settings</button>
                         </form>
                     </motion.div> 
                 }
-                {props.showingError && <motion.div key="error" id="errorWindow" initial={{opacity: 0}} animate={{opacity: 100}} transition={{duration: .2}} exit={{opacity: 0}}>Please pick at least one entry</motion.div>}
             </AnimatePresence>
     )
 }

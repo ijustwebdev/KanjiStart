@@ -1,8 +1,9 @@
+/* commented items are now controlled by localStorage colorSettings object */
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
-  background-color: #1e2935;
-  color: #66669b;
+  /* background-color: #1e2935; */
+  /* color: #66669b; */
 }
 
 code {
@@ -50,7 +51,7 @@ code {
 .meaningChildDiv{
   display: flex;
   flex-direction: column;
-  width: 50%;
+  width: 70%;
 }
 .entryEl{
   display: flex;
@@ -81,6 +82,7 @@ code {
   list-style-type: square;
   line-height: 1.3;
   margin-top: 2vh;
+  margin-left: 1.7vh;
   padding-left: .2vw;
 }
 #extraMeanings{
@@ -92,9 +94,9 @@ code {
 .buttons{
   transition: 0.25s;
 }
-.buttons:hover{
+/* .buttons:hover{
   box-shadow: inset rgba(102, 102, 155, 1) 0px 0px 0px 100vw;
-}
+} */
 .buttons:active{
   transition: .1s;
   box-shadow: inset rgba(255, 255, 255, .5) 0px 0px 0px 100vw;
@@ -109,8 +111,8 @@ code {
   max-width: 15vw;
   border-radius: .1vw;
   background-color: transparent;
-  color: #66669b;
-  border: solid .2vh #66669b;
+  /* color: #66669b; */
+  /* border: solid .2vh #66669b; */
   /* box-shadow: rgba(102, 102, 155, 1) 0px 0px 3px 0px; */
   -webkit-user-select: none; /* Safari */        
   -moz-user-select: none; /* Firefox */
@@ -139,6 +141,7 @@ code {
   flex-direction: column;
   justify-content: space-between;
   margin: 1vw 1vw;
+  user-select: none;
 }
 .icon img{
   width: 1.2vw;
@@ -168,6 +171,7 @@ code {
 }
 #modalWindow{
   background-color: #66669b;
+  box-shadow: 0px 0px 20px 10px rgba(0, 0, 0, .2);
   color: white;
   border-style: double;
   border-radius: .5vw;
@@ -231,11 +235,52 @@ fieldset{
 #saveSettings:hover{
   box-shadow: inset 0 0 2px 0 black;
 }
+/* : Color Settings Modal */
+#colorModal{
+  margin-top: 15%;
+  margin-left: 30%;
+  position: fixed;
+  color: white;
+  z-index: 2;
+  border-radius: .5vw;
+  box-shadow: 0px 0px 20px 10px rgba(0, 0, 0, .2);
+  width: 40vw;
+}
+#colorModal > form{
+  margin: 0 auto;
+  background-color: #3b3b3b;
+  border-radius: .5vw;
+  padding: 2vh 1vw;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+#colorButton{
+  font-size: 1vw;
+  margin-top: 2vh;
+  border: solid 2px white;
+  border-radius: .2vw;
+  width: 20vw;
+  height: 5vh;
+  display: block;
+}
+#closeButton{
+  font-size: 1.2vw;
+  border: solid 2px white;
+  position: fixed;
+  display: relative;
+  height: fit-content;
+  margin-left: 25vw;
+  padding: 1vh;
+}
 @media(min-width: 1921px){
   #flexWrapper{
     max-width: 1920px;
     margin: 0 auto;
     justify-content: center;
+  }
+  #meaningDiv{
+    margin-left: 5vw;
   }
   #sidebar{
     justify-content: space-evenly;
