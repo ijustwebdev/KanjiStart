@@ -21,7 +21,7 @@ Firefox users: Grab the add-on [here](https://addons.mozilla.org/en-US/firefox/a
 
 ![Screen Shot 2022-12-06 at 21 24 31-fullpage](https://user-images.githubusercontent.com/50127921/206073075-16d9c76a-a2be-4c4b-8b87-f2c30a025053.png)
 
-![Screen Shot 2022-12-06 at 21 26 56-fullpage](https://user-images.githubusercontent.com/50127921/206073080-39474d3e-f38d-4a56-a153-2e4bf1057ad0.png)
+![Screen Shot 2022-12-06 at 21 38 44-fullpage](https://user-images.githubusercontent.com/50127921/206074347-3872b7c4-110b-4e21-8f7a-eb10fdb9c19b.png)
 
 ![Screen Shot 2022-12-06 at 21 28 42-fullpage](https://user-images.githubusercontent.com/50127921/206073086-d1b642f9-117f-404f-9754-a9b7aed4afb6.png)
 
