@@ -4,7 +4,6 @@ Designed to be an extension/add-on that can display a kanji and some information
 
 The user can select which time interval they'd like to retrieve a new kanji at as well as which grades of kanji will be considered in the random selection. They can also change the primary and secondary colors in a seperate menu. 
 
-I'd like to be able to warn the user that they've selected two very similar colors but I'll leave that for another time. 
 I'm thinking the menu for the color selection should probably not bring along any sort of modal background that darkens the user's view of the page as well as the position of the modal window being suboptimal but I'll rectify that in a future update.
 
 There's an error message that appears when loading it as an unpacked extension in chrome about the icons entry in the manifest being the wrong type but no matter what I try I cannot get it to go away. It seems to be a chrome issue though as firefox doesn't report it. 
