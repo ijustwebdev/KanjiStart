@@ -1,6 +1,6 @@
 {
 	"name": "KanjiStart",
-	"version": "0.1.1",
+	"version": "0.2.0",
 	"manifest_version": 2,
 	"description": "Replaces your New Tab page with a display for a randomly chosen kanji and some information about it.",
 	"icons": {
