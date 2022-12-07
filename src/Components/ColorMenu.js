@@ -24,14 +24,14 @@ export default function ColorMenu(props){
                             <legend>Primary Color</legend>
                             <div id="colorPicker">
                                 <HexColorPicker color={props.colorSettings.primary} onChange={props.setColorPrimary} />
-                                <HexColorInput color={props.colorSettings.primary} onChange={props.setColorPrimary} />
+                                <HexColorInput id="colorInput1" color={props.colorSettings.primary} onChange={props.setColorPrimary} />
                             </div>
                         </fieldset>
                         <fieldset>
                             <legend>Secondary Color</legend>
                             <div id="colorPicker2">
                                 <HexColorPicker color={props.colorSettings.secondary} onChange={props.setColorSecondary} />
-                                <HexColorInput color={props.colorSettings.secondary} onChange={props.setColorSecondary} />
+                                <HexColorInput id="colorInput2" color={props.colorSettings.secondary} onChange={props.setColorSecondary} />
                             </div>
                         </fieldset>
                         <button id="colorButton" type="button" onClick={props.handleSubmit} style={{color: hoverState3 ? "#2b2b2b" : "white", border: "solid .2vh  white" , backgroundColor: hoverState3 ? "white" : "#2b2b2b"}} onMouseEnter={handleMouseEnterLeave} onMouseLeave={handleMouseEnterLeave}>Save Colors</button>

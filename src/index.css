@@ -272,6 +272,17 @@ fieldset{
   margin-left: 25vw;
   padding: 1vh;
 }
+#colorInput1, #colorInput2{
+  margin: 1vh auto;
+  width: 94%;
+  padding: .5vh .2vw;
+  text-align: center;
+  background-color: transparent;
+  color: white;
+  border: solid 2px white;
+  border-radius: .2vw;
+}
+
 @media(min-width: 1921px){
   #flexWrapper{
     max-width: 1920px;
