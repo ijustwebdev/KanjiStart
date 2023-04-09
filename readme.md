@@ -1,4 +1,4 @@
-Still under construction. My first React work so it's definitely not good. I'll settle for working first. 
+My first React work so it's definitely not good. I'll settle for working in some capacity.
 
 Designed to be an extension/add-on that can display a kanji and some information about it on the new tab page. I was inspired by [Kanjiday](https://kanjiday.com/) but it no longer exists on the chrome extension store. This has been fun to make as it is a solution to an actual problem I had once Kanjiday was removed. 
 
