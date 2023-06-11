@@ -4,12 +4,12 @@ import {AnimatePresence} from "framer-motion"
 import dayjs from "dayjs"
 
 // components 
-import Kanji from "./Kanji.js"
-import Meanings from "./Meanings.js"
-import SidebarLinks from "./SidebarLinks.js"
-import SettingsModal from "./SettingsModal.js"
-import ColorMenu from "./ColorMenu.js"
-import SettingsBg from "./SettingsBg.js"
+import Kanji from "./Kanji.jsx"
+import Meanings from "./Meanings.jsx"
+import SidebarLinks from "./SidebarLinks.jsx"
+import SettingsModal from "./SettingsModal.jsx"
+import ColorMenu from "./ColorMenu.jsx"
+import SettingsBg from "./SettingsBg.jsx"
 
 export default function App(){
     
